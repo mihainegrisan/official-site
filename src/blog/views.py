@@ -24,6 +24,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html' #otherwise it looks for blog/post_list.html
     context_object_name = 'posts' # object_list - default
     # ordering = ['-date_published'] # change the ordering here or in the model
+    paginate_by = 2 # passes page_obj object into the template
 
 
 class PostDetailView(DetailView):
