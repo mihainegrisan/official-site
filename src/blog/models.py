@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
@@ -18,13 +17,6 @@ class Post(models.Model):
     )
 
     tags = TaggableManager()
-
-    # def get_absolute_url(self):
-    #     return reverse('blog:post_detail',
-    #                    args=[self.publish.year,
-    #                          self.publish.month,
-    #                          self.publish.day,
-    #                          self.slug])
 
     objects = models.Manager() # The default manager
     published = PublishedManager() # My custom manager
@@ -45,3 +37,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    # def get_absolute_url(self):
+    #     return reverse('blog:post-detail',
+    #                    args=[self.date_published.year,
+    #                          self.date_published.month,
+    #                          self.date_published.day,
+    #                          self.slug])
+
+    # returns the full url to the instance as a string
+    def get_absolute_url(self):
+        return reverse('blog:post-detail', kwargs={'pk': self.pk})

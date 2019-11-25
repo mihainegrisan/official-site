@@ -14,7 +14,7 @@
 
   <!-- {% block title %}{% endblock title %} -->
   {% if title %}
-    <title>Mihai Blog - {{ title }}</title>
+    <title>{{ title }}</title>
   {% else %}
     <title>Mihai Blog</title>
   {% endif %}
@@ -35,7 +35,8 @@
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+              <a class="nav-item nav-link" href="{% url 'blog:post-create' %}">New Post</a>
+              <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}
               <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
