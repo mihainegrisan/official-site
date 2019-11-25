@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -9,8 +11,9 @@ from django.views.generic import (
 )
 from .models import Post
 from django.urls import reverse_lazy
+from django.template.defaultfilters import slugify
 
-# Create your views here.
+
 def home(request):
     posts = Post.published.all()
     context = {
@@ -24,7 +27,19 @@ class PostListView(ListView):
     template_name = 'blog/home.html' #otherwise it looks for blog/post_list.html
     context_object_name = 'posts' # object_list - default
     # ordering = ['-date_published'] # change the ordering here or in the model
-    paginate_by = 2 # passes page_obj object into the template
+    paginate_by = 4 # passes page_obj object into the template
+
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'
+    context_object_name = 'posts' # object_list - default
+    paginate_by = 3
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        # kwargs - the query parameters
+        return Post.published.filter(author=user).order_by('-date_published')
 
 
 class PostDetailView(DetailView):
@@ -40,8 +55,16 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     # override the form valid method in order to add the author - the user who is submitting the post
     def form_valid(self, form):
+        cd = form.cleaned_data
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        form.instance.slug = slugify(cd['title'])
+        form.instance.status = 'published'
+        if not Post.objects.filter(slug__exact=form.instance.slug).exists():
+            return super().form_valid(form)
+        else:
+            messages.error(self.request, 'Title already exists!')
+            return self.form_invalid(form)
+
 
 
 # post_form.html

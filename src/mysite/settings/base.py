@@ -1,4 +1,6 @@
 import os
+from django.contrib.messages import constants as messages
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = os.environ.get('SECRET_KEY_MIHAI_SITE')
@@ -78,3 +80,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog:home'
 LOGIN_URL = 'login'
+
+# I'm changing just the tag of the error.
+# so messages.error -> tags == danger
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
