@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -63,8 +64,6 @@ DATABASES = {
     }
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Europe/Bucharest'
 USE_I18N = True
@@ -81,7 +80,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog:home'
 LOGIN_URL = 'login'
 
-# I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger). 
+# I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger).
 # so messages.error -> tags == danger
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -94,3 +93,17 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+# django-storages & AWS settings
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID_MIHAI_BUSINESS')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY_MIHAI_BUSINESS')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME_MIHAI_BUSINESS')
+# If a user uploads a file with the same name as another user's filename .. don't overwrite the file... just add it with a different name
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_REGION_NAME = 'eu-central-1'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# To allow django-admin.py collectstatic to automatically put your static files in your bucket set the following in your settings.py:
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
