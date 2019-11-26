@@ -58,7 +58,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         cd = form.cleaned_data
         form.instance.author = self.request.user
         form.instance.slug = slugify(cd['title'])
-        form.instance.status = 'published'
+        form.instance.status = 'published' # comment if you want to be able to check the user's posts before publishing them
         if not Post.objects.filter(slug__exact=form.instance.slug).exists():
             return super().form_valid(form)
         else:

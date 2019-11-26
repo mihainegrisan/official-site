@@ -81,8 +81,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog:home'
 LOGIN_URL = 'login'
 
-# I'm changing just the tag of the error.
+# I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger). 
 # so messages.error -> tags == danger
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# EMAIL CONFIGURATION
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
