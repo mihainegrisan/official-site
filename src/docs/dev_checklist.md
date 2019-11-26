@@ -24,9 +24,9 @@ Users app:
 Miscellaneous:
 [x] - split settings (base, dev, prod)
 [x] - create GitHub repository
+[x] - create core app (py manage.py rename new_project_name) - custom command
 [x] - generate xml sitemap file (add and install sites and sitemap)
 [x] - honeypot and change admin/ route + environ var for the url
-[ ] -
 [ ] -
 [ ] -
 [ ] - block IP addresses
