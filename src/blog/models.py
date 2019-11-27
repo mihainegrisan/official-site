@@ -38,13 +38,21 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('blog:post-detail',
+                       args=[self.date_published.year,
+                             self.date_published.month,
+                             self.date_published.day,
+                             self.slug])
     # def get_absolute_url(self):
     #     return reverse('blog:post-detail',
-    #                    args=[self.date_published.year,
-    #                          self.date_published.month,
-    #                          self.date_published.day,
-    #                          self.slug])
+    #                    kwargs={
+    #                         'year': self.date_published.year,
+    #                         'month': self.date_published.month,
+    #                         'day': self.date_published.day,
+    #                         'slug': self.slug
+    #                         })
 
     # returns the full url to the instance as a string
-    def get_absolute_url(self):
-        return reverse('blog:post-detail', kwargs={'pk': self.pk})
+    # def get_absolute_url(self):
+    #     return reverse('blog:post-detail', kwargs={'pk': self.pk})

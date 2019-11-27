@@ -8,7 +8,7 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE += [
-    
+
 ]
 
 AUTH_PASSWORD_VALIDATORS = [

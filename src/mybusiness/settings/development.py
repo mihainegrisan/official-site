@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '9c9ab6b8.ngrok.io']
 
 INSTALLED_APPS += [
     # keep this after ...'django.contrib.staticfiles'

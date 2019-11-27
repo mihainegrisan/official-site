@@ -14,20 +14,45 @@ from django.urls import reverse_lazy
 from django.template.defaultfilters import slugify
 
 
-def home(request):
-    posts = Post.published.all()
-    context = {
-        'posts': posts
-    }
-    return render(request, 'blog/home.html', context)
-
-
 class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html' #otherwise it looks for blog/post_list.html
     context_object_name = 'posts' # object_list - default
     # ordering = ['-date_published'] # change the ordering here or in the model
     paginate_by = 4 # passes page_obj object into the template
+
+    
+
+
+class PostDetailView(DetailView):
+    # model = Post
+    context_object_name = 'post' # object - default
+
+    # this works but django advises to use get_context_data() !!!
+    # self.context["another_one"] = "here goes more"
+
+    def get_object(self):
+        year_ = self.kwargs.get('year')
+        month_ = self.kwargs.get('month')
+        day_ = self.kwargs.get('day')
+        slug_ = self.kwargs.get('post_slug')
+        return get_object_or_404(Post,
+                                 date_published__year=year_,
+                                 date_published__month=month_,
+                                 date_published__day=day_,
+                                 slug=slug_,
+                                 status='published')
+
+# def post_detail(request, year, month, day, post_slug):
+#     post = get_object_or_404(Post,  slug=post_slug,
+#                                     status='published',
+#                                     date_published__year=year,
+#                                     date_published__month=month,
+#                                     date_published__day=day)
+#     context = {
+#         'post': post
+#     }
+#     return render(request, 'blog/post_detail.html', context)
 
 
 class UserPostListView(ListView):
@@ -38,13 +63,7 @@ class UserPostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        # kwargs - the query parameters
         return Post.published.filter(author=user).order_by('-date_published')
-
-
-class PostDetailView(DetailView):
-    model = Post
-    context_object_name = 'post' # object - default
 
 
 # post_form.html

@@ -17,7 +17,7 @@
         {% endif %}
       </div>
       <h2 class="article-title">{{ post.title }}</h2>
-      <p class="article-content">{{ post.content|markdown|truncatewords_html:30 }}</p>
+      <p class="article-content">{{ post.content|markdown }}</p>
       <!-- add in post_detail -> {{ post.content|markdown }} -->
     </div>
   </article>

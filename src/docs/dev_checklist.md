@@ -3,18 +3,21 @@ Blog app:
 [x] - create Post model
 [x] - create custom Manager ('published')
 [x] - tags for posts
-[x] - register, login and logout functionality (views + templates)
 [x] - create profile when a new user is created (view -> login_required)
-[ ] - added CRUD functionality
-[ ] -
-[ ] -
+[x] - CRUD functionality
 [x] - serve images from AWS S3 Bucket
-[ ] - update get_absolute_url() with slug and date_posted(year, month, day)
-
+[x] - update get_absolute_url() with slug and date_posted(year, month, day)
+[ ] - display time to read a certain article
+[ ] - share a blog post via email
+[ ] - gather the latest posts and display them
+[ ] -
+[ ] -
 
 Users app:
 [x] - create users app
-[x] - add password reset functionality
+[x] - create Profile model
+[x] - password reset functionality (templates)
+[x] - register, login and logout functionality (views + templates)
 [ ] -
 [ ] -
 [ ] -
@@ -24,15 +27,17 @@ Users app:
 Miscellaneous:
 [x] - split settings (base, dev, prod)
 [x] - create GitHub repository
-[x] - create core app (py manage.py rename new_project_name) - custom command
+[x] - create core app (py manage.py rename old_project_name new_project_name) - custom command
 [x] - generate xml sitemap file (add and install sites and sitemap)
 [x] - honeypot and change admin/ route + environ var for the url
+[ ] -
+[ ] -
+[x] - change home.html name to post_list.html and all related files
+[x] - split some blocks of code into different templates (ex. pagination)
+[ ] - markup preview in admin and/or front-end
 [ ] -
 [ ] -
 [ ] - block IP addresses
 [ ] - RSS feed
 [ ] - authentication with email address
-[ ] - markup preview in admin and/or front-end
-[ ] - add two factor authentication https://github.com/Bouke/django-two-factor-auth
-[ ] -
-[ ] -
+[ ] - add Google's two factor authentication https://github.com/Bouke/django-two-factor-auth
