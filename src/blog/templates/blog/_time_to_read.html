@@ -1,0 +1,3 @@
+{% with time_to_read=post.get_time_to_read %}
+  {{ time_to_read }} minute{{ time_to_read|pluralize }} read
+{% endwith %}

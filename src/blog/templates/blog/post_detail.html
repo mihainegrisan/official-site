@@ -16,9 +16,11 @@
           </div>
         {% endif %}
       </div>
-      <h2 class="article-title">{{ post.title }}</h2>
+      <h2 class="article-title">
+        {{ post.title|capfirst }} -
+        {% include 'blog/_time_to_read.html' %}
+      </h2>
       <p class="article-content">{{ post.content|markdown }}</p>
-      <!-- add in post_detail -> {{ post.content|markdown }} -->
     </div>
   </article>
 {% endblock content %}

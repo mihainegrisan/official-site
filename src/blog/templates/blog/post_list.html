@@ -10,8 +10,12 @@
           <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author }}</a>
           <small class="text-muted">{{ post.date_published|date:"N d, Y" }}</small>
         </div>
-        <h2><a class="article-title" href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-        <p class="article-content">{{ post.content|markdown|truncatewords_html:145 }}</p>
+        <h2>
+          <a class="article-title" href="{{ post.get_absolute_url }}">
+            {{ post.title|capfirst }}</a> -
+            {% include 'blog/_time_to_read.html' %}
+        </h2>
+        <p class="article-content">{{ post.content|markdown|truncatewords_html:200 }}</p>
       </div>
     </article>
   {% endfor %}

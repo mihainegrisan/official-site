@@ -21,7 +21,7 @@ class Post(models.Model):
     objects = models.Manager() # The default manager
     published = PublishedManager() # My custom manager
 
-    title = models.CharField(max_length=125)
+    title = models.CharField(max_length=80)
     slug = models.SlugField(max_length=200, unique_for_date='date_published')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     content = models.TextField()
@@ -44,6 +44,10 @@ class Post(models.Model):
                              self.date_published.month,
                              self.date_published.day,
                              self.slug])
+        
+    def get_time_to_read(self):
+        return len(self.content) // 150 + 1
+
     # def get_absolute_url(self):
     #     return reverse('blog:post-detail',
     #                    kwargs={

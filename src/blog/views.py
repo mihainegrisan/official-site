@@ -16,12 +16,12 @@ from django.template.defaultfilters import slugify
 
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html' #otherwise it looks for blog/post_list.html
+    template_name = 'blog/post_list.html' #otherwise it looks for blog/post_list.html
     context_object_name = 'posts' # object_list - default
     # ordering = ['-date_published'] # change the ordering here or in the model
     paginate_by = 4 # passes page_obj object into the template
 
-    
+
 
 
 class PostDetailView(DetailView):
@@ -30,6 +30,12 @@ class PostDetailView(DetailView):
 
     # this works but django advises to use get_context_data() !!!
     # self.context["another_one"] = "here goes more"
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     post = self.get_object()
+    #     context['time_to_read'] = len(post.content) // 150 + 1
+    #     return context
+    # CREATED A METHOD get_time_to_read INSIDE models.py
 
     def get_object(self):
         year_ = self.kwargs.get('year')
@@ -78,7 +84,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         form.instance.slug = slugify(cd['title'])
         form.instance.status = 'published' # comment if you want to be able to check the user's posts before publishing them
-        if not Post.objects.filter(slug__exact=form.instance.slug).exists():
+        slug_is_unique = not Post.objects.filter(slug__exact=form.instance.slug).exists()
+
+        if slug_is_unique:
             return super().form_valid(form)
         else:
             messages.error(self.request, 'Title already exists!')
@@ -111,8 +119,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # context_object_name = 'object' - default
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    # success_url = reverse('blog:home')
-    success_url = reverse_lazy('blog:home')
+    # success_url = reverse('blog:post_list')
+    success_url = reverse_lazy('blog:post_list')
 
     def test_func(self):
         post = self.get_object()
@@ -124,7 +132,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # However, you can't use reverse with success_url, because then reverse is called when the module is imported, before the urls have been loaded.
 # def get_success_url(self):
-#     return reverse('blog:home')
+#     return reverse('blog:post_list')
 # Overriding get_success_url is one option, but the easiest fix is to use reverse_lazy instead of reverse.
 
 
