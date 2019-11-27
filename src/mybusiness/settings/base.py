@@ -80,7 +80,7 @@ MEDIA_URL = '/media/' #how to access the image in the browser
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog:home'
+LOGIN_REDIRECT_URL = 'blog:post_list'
 LOGIN_URL = 'login'
 
 # I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger).
