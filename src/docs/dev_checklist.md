@@ -7,7 +7,7 @@ Blog app:
 [x] - CRUD functionality
 [x] - serve images from AWS S3 Bucket
 [x] - update get_absolute_url() with slug and date_posted(year, month, day)
-[ ] - display time to read a certain article
+[x] - display time to read a particular blog post
 [ ] - share a blog post via email
 [ ] - gather the latest posts and display them
 [ ] -
@@ -30,10 +30,10 @@ Miscellaneous:
 [x] - create core app (py manage.py rename old_project_name new_project_name) - custom command
 [x] - generate xml sitemap file (add and install sites and sitemap)
 [x] - honeypot and change admin/ route + environ var for the url
-[ ] -
-[ ] -
 [x] - change home.html name to post_list.html and all related files
 [x] - split some blocks of code into different templates (ex. pagination)
+[ ] -
+[ ] -
 [ ] - markup preview in admin and/or front-end
 [ ] -
 [ ] -
