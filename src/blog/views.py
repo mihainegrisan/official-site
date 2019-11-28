@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -12,6 +12,8 @@ from django.views.generic import (
 from .models import Post
 from django.urls import reverse_lazy
 from django.template.defaultfilters import slugify
+from .forms import ShareByEmailForm
+from django.core.mail import send_mail
 
 
 class PostListView(ListView):
@@ -22,14 +24,12 @@ class PostListView(ListView):
     paginate_by = 4 # passes page_obj object into the template
 
 
-
-
 class PostDetailView(DetailView):
     # model = Post
     context_object_name = 'post' # object - default
 
     # this works but django advises to use get_context_data() !!!
-    # self.context["another_one"] = "here goes more"
+    # self.context["name_to_use"] = "value"
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     post = self.get_object()
@@ -38,16 +38,12 @@ class PostDetailView(DetailView):
     # CREATED A METHOD get_time_to_read INSIDE models.py
 
     def get_object(self):
-        year_ = self.kwargs.get('year')
-        month_ = self.kwargs.get('month')
-        day_ = self.kwargs.get('day')
-        slug_ = self.kwargs.get('post_slug')
         return get_object_or_404(Post,
-                                 date_published__year=year_,
-                                 date_published__month=month_,
-                                 date_published__day=day_,
-                                 slug=slug_,
-                                 status='published')
+                    date_published__year = self.kwargs.get('year'),
+                    date_published__month = self.kwargs.get('month'),
+                    date_published__day = self.kwargs.get('day'),
+                    slug = self.kwargs.get('post_slug'),
+                    status = 'published')
 
 # def post_detail(request, year, month, day, post_slug):
 #     post = get_object_or_404(Post,  slug=post_slug,
@@ -134,6 +130,39 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # def get_success_url(self):
 #     return reverse('blog:post_list')
 # Overriding get_success_url is one option, but the easiest fix is to use reverse_lazy instead of reverse.
+
+
+
+def post_share(request, pk):
+    post = get_object_or_404(Post, id=pk, status='published')
+    sent = False
+
+    if request.method == 'POST':
+        form = ShareByEmailForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+
+            subject = f"{cd['name']} ({cd['email']}) recommends you to read {post.title}."
+
+            body = f"Read {post.title} at {post_url}\n\n{cd['name']}'s comments:\n\n{cd['comments']}"
+
+            send_mail(subject, body, 'mihainegrisan.cv@gmail.com', [cd['to']])
+            sent = True
+            messages.success(request, f"Your email was successfully sent to {cd['to']}")
+
+            # This will call the model’s get_absolute_url() method;
+            return redirect(post)
+    else:
+        form = ShareByEmailForm()
+
+    context = {
+        'post': post,
+        'form': form,
+        'sent': sent,
+    }
+
+    return render(request, 'blog/post_share_by_email.html', context)
 
 
 

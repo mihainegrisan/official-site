@@ -44,7 +44,7 @@ class Post(models.Model):
                              self.date_published.month,
                              self.date_published.day,
                              self.slug])
-        
+
     def get_time_to_read(self):
         return len(self.content) // 150 + 1
 
