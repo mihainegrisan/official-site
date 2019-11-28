@@ -14,14 +14,44 @@ from django.urls import reverse_lazy
 from django.template.defaultfilters import slugify
 from .forms import ShareByEmailForm
 from django.core.mail import send_mail
+from taggit.models import Tag
+from django.db.models import Count
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
+# ListView uses MultipleObjectMixin (therefor you can use methods like is_paginated in the template)
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/post_list.html' #otherwise it looks for blog/post_list.html
-    context_object_name = 'posts' # object_list - default
+    context_object_name = 'posts' # Default: object_list
+    # queryset = Post.objects.all() # Default: Model.objects.all()
+    # template_name = 'blog/post_list.html' # Default: <app_label>/<model_name>_list.html
     # ordering = ['-date_published'] # change the ordering here or in the model
-    paginate_by = 4 # passes page_obj object into the template
+    paginate_by = 3 # passes page_obj object into the template
+
+
+def post_list(request, tag_slug=None):
+    object_list = Post.published.all()
+
+    tag = None
+    if tag_slug:
+        # get the object with the specific tag in the db
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
+
+    paginator = Paginator(object_list, 3)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'page': page,
+        'posts': posts,
+        'tag': tag,
+    }
+    return render(request, 'blog/post_list.html', context)
 
 
 class PostDetailView(DetailView):
@@ -143,9 +173,9 @@ def post_share(request, pk):
             cd = form.cleaned_data
             post_url = request.build_absolute_uri(post.get_absolute_url())
 
-            subject = f"{cd['name']} ({cd['email']}) recommends you to read {post.title}."
+            subject = f"{cd['name']}({cd['email']}) recommends you {post.title[:25]}... {post.get_time_to_read()} minutes read"
 
-            body = f"Read {post.title} at {post_url}\n\n{cd['name']}'s comments:\n\n{cd['comments']}"
+            body = f"Read '{post.title}' at {post_url}\n\n{cd['name']}'s comments:\n\n{cd['comments']}"
 
             send_mail(subject, body, 'mihainegrisan.cv@gmail.com', [cd['to']])
             sent = True
@@ -153,6 +183,8 @@ def post_share(request, pk):
 
             # This will call the model’s get_absolute_url() method;
             return redirect(post)
+        else:
+            messages.error(request, "Please check again.")
     else:
         form = ShareByEmailForm()
 

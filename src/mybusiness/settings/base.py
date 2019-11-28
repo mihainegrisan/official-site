@@ -77,7 +77,7 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog:post_list'
+LOGIN_REDIRECT_URL = 'blog:post_list' # change to post.get_absolute_url()?
 LOGIN_URL = 'login'
 
 # I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger).
