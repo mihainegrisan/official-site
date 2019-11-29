@@ -33,7 +33,7 @@ def post_list(request, tag_slug=None):
 
     tag = None
     if tag_slug:
-        # get the object with the specific tag in the db
+        # get the Tag object with the specific tag in the db
         tag = get_object_or_404(Tag, slug=tag_slug)
         object_list = object_list.filter(tags__in=[tag])
 
@@ -108,15 +108,16 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         cd = form.cleaned_data
         form.instance.author = self.request.user
-        form.instance.slug = slugify(cd['title'])
         form.instance.status = 'published' # comment if you want to be able to check the user's posts before publishing them
-        slug_is_unique = not Post.objects.filter(slug__exact=form.instance.slug).exists()
 
-        if slug_is_unique:
-            return super().form_valid(form)
-        else:
-            messages.error(self.request, 'Title already exists!')
-            return self.form_invalid(form)
+        # MAKING THE SLUG UNIQUE IS NOW HANDLED IN models.py
+        # form.instance.slug = slugify(cd['title'])
+        # slug_is_unique = not Post.objects.filter(slug__exact=form.instance.slug).exists()
+        # if slug_is_unique:
+        return super().form_valid(form)
+        # else:
+        #     messages.error(self.request, 'Title already exists!')
+        #     return self.form_invalid(form)
 
 
 
@@ -161,6 +162,14 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #     return reverse('blog:post_list')
 # Overriding get_success_url is one option, but the easiest fix is to use reverse_lazy instead of reverse.
 
+
+def get_my_object_or_404(self):
+    return get_object_or_404(Post,
+                date_published__year = self.kwargs.get('year'),
+                date_published__month = self.kwargs.get('month'),
+                date_published__day = self.kwargs.get('day'),
+                slug = self.kwargs.get('post_slug'),
+                status = 'published')
 
 
 def post_share(request, pk):
