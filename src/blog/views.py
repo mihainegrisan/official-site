@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from django.template.defaultfilters import slugify
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count
+from django.db.models import Count, Q
 from taggit.models import Tag
 from .models import Post
 from .forms import ShareByEmailForm
@@ -36,7 +36,12 @@ def post_list(request, tag_slug=None):
     # search posts feature
     query = request.GET.get('query')
     if query:
-        object_list = object_list.filter(title__icontains=query)
+        object_list = object_list.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query)
+            ).distinct()
+        # distinct() -> no duplicates
 
     tag = None
     if tag_slug:

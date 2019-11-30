@@ -13,15 +13,15 @@ Blog app:
 [x] - refactor from class-based view to function-based view to implement the next two ...
 [x] - deal with InvalidPage exceptions (PageNotAnInteger, EmptyPage)
 [x] - query posts by tag
+[x] - comments for FB + likes
+[x] - search post feature (make sure it works with pagination)
 [ ] - make suggestions for similar posts
-[ ] - comments on site
-[ ] - comments for FB + likes
+[ ] - my own comments on site
 [ ] - query the latest posts and display them
-[ ] - search post feature
 [ ] - button to view each post ?
 [ ] -
 [ ] -
-[ ] - git branches 
+[ ] - git branches
 
 
 Users app:
