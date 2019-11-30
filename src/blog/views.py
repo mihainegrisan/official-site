@@ -17,6 +17,8 @@ from django.db.models import Count
 from taggit.models import Tag
 from .models import Post
 from .forms import ShareByEmailForm
+from urllib.parse import quote_plus
+
 
 # ListView uses MultipleObjectMixin (therefor you can use methods like is_paginated in the template)
 class PostListView(ListView):
@@ -60,12 +62,14 @@ class PostDetailView(DetailView):
 
     # this works but django advises to use get_context_data() !!!
     # self.context["name_to_use"] = "value"
+    # Finally I CREATED A METHOD get_time_to_read INSIDE models.py
+
+    # Made a custom filter tag instead of this
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     post = self.get_object()
-    #     context['time_to_read'] = len(post.content) // 150 + 1
+    #     context['share_string'] = quote_plus(post.title)
     #     return context
-    # CREATED A METHOD get_time_to_read INSIDE models.py
 
     def get_object(self):
         return get_object_or_404(Post,

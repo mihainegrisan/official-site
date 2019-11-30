@@ -1,5 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load blog_tags %}
+{% load urlify %}
 
 {% block content %}
   <article class="media content-section">
@@ -22,6 +23,21 @@
         {% include 'blog/_time_to_read.html' %}
       </h2>
       <p class="article-content">{{ post.content|markdown }}</p>
+
+      <!-- Like and Share links -->
+      <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+      <hr><br>
+      <div class="row">
+        <div class="col-md-12 col-md-offset-1">
+          <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="" data-numposts="5"></div>
+        </div>
+      </div>
+      <!-- <div>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">Share on Facebook</a>
+        <a href="https://twitter.com/home?status={{ post.title|urlify }}%20{{ request.build_absolute_uri }}" target="_blank">Share on Twitter</a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title|urlify }}&summary={{ post.title|urlify }}&source={{ request.build_absolute_uri }}" target="_blank">Share on Linkedin</a>
+        <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ post.title|urlify }}" target="_blank">Share on Reddit</a>
+      </div> -->
     </div>
   </article>
 {% endblock content %}

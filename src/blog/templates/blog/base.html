@@ -20,6 +20,9 @@
   {% endif %}
 </head>
 <body>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=445334359632844&autoLogAppEvents=1"></script>
+  
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
@@ -50,7 +53,7 @@
 
   <main role="main" class="container">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-9">
         {% if messages %}
           {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
@@ -60,7 +63,7 @@
         {% endif %}
         {% block content %}{% endblock %}
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="content-section">
           <h3>Sidebar</h3>
           <p class='text-muted'>Not configured yet
