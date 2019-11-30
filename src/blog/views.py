@@ -9,14 +9,14 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Post
 from django.urls import reverse_lazy
 from django.template.defaultfilters import slugify
-from .forms import ShareByEmailForm
 from django.core.mail import send_mail
-from taggit.models import Tag
-from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
+from taggit.models import Tag
+from .models import Post
+from .forms import ShareByEmailForm
 
 # ListView uses MultipleObjectMixin (therefor you can use methods like is_paginated in the template)
 class PostListView(ListView):
@@ -141,12 +141,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
-# expects a form that asks if you're sure you want to delete the post
 # post_confirm_delete.html
 # context_object_name = 'object' - default
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    # success_url = reverse('blog:post_list')
     success_url = reverse_lazy('blog:post_list')
 
     def test_func(self):
@@ -161,15 +159,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # def get_success_url(self):
 #     return reverse('blog:post_list')
 # Overriding get_success_url is one option, but the easiest fix is to use reverse_lazy instead of reverse.
-
-
-def get_my_object_or_404(self):
-    return get_object_or_404(Post,
-                date_published__year = self.kwargs.get('year'),
-                date_published__month = self.kwargs.get('month'),
-                date_published__day = self.kwargs.get('day'),
-                slug = self.kwargs.get('post_slug'),
-                status = 'published')
 
 
 def post_share(request, pk):

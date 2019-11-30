@@ -1,4 +1,5 @@
 from .base import *
+import sys
 
 DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '9c9ab6b8.ngrok.io']
@@ -38,3 +39,8 @@ DEBUG_TOOLBAR_CONFIG = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/' #how to access the image in the browser
+
+
+# the django debug toolbar interferes with the tests.
+# this is one workaround .. also check urls.py
+TESTING_MODE = 'test' in sys.argv
