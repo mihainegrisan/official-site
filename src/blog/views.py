@@ -33,6 +33,11 @@ class PostListView(ListView):
 def post_list(request, tag_slug=None):
     object_list = Post.published.all()
 
+    # search posts feature
+    query = request.GET.get('query')
+    if query:
+        object_list = object_list.filter(title__icontains=query)
+
     tag = None
     if tag_slug:
         # get the Tag object with the specific tag in the db

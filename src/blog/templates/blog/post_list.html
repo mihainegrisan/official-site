@@ -2,6 +2,10 @@
 {% load blog_tags %}
 
 {% block content %}
+  <form method='GET' action="">
+    <input type="text" name="&query" value="{{ request.GET.query }}" placeholder="Search posts">
+    <input type="submit" value="Search">
+  </form>
   {% if tag %}
       <h2>Posts tagged with "{{ tag.name }}":</h2>
   {% endif %}
