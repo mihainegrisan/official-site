@@ -13,15 +13,15 @@ class ShareByEmailForm(forms.Form):
 
 class PostForm(forms.ModelForm):
 
-    # add html to your form fields  
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'markdown-content'
-        # self.helper.form_id = 'id-exampleForm'
-        # self.helper.form_method = 'post'
-        # self.helper.form_action = 'submit_survey'
-        # self.helper.add_input(Submit('submit', 'Submit'))
+    # add html to your form fields
+    # def __init__(self, *args, **kwargs):
+    #     super(PostForm, self).__init__(*args, **kwargs)
+    #     self.helper = FormHelper()
+    #     self.helper.form_class = 'markdown-content'
+    #     self.helper.form_id = 'id-exampleForm'
+    #     self.helper.form_method = 'post'
+    #     self.helper.form_action = 'submit_survey'
+    #     self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         model = Post

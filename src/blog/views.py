@@ -117,10 +117,10 @@ class UserPostListView(ListView):
 # post_form.html
 # context_object_name = 'form' - default
 class PostCreateView(LoginRequiredMixin, CreateView):
-    # form_class = PostForm #uncomment if you want to add PagedownWidget
+    form_class = PostForm #uncomment if you want to add PagedownWidget
     model = Post
     # specifie the fields in the form OR in the view
-    fields = ['title', 'tags', 'content'] # 'status'
+    # fields = ['title', 'tags', 'content'] # 'status'
 
     # override the form valid method in order to add the author - the user who is submitting the post
     def form_valid(self, form):
@@ -172,7 +172,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
-
 
 # However, you can't use reverse with success_url, because then reverse is called when the module is imported, before the urls have been loaded.
 # def get_success_url(self):

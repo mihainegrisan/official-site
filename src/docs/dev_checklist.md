@@ -23,8 +23,10 @@ Blog app:
 [ ] - subscribe feature to receive emails when new posts are published
 [ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
+[ ] - bug in the models - how long does it take to read a post
+[ ] - style the  - new post form -
 [ ] -
-[ ] -
+[ ] - 
 [ ] - git branches
 
 
