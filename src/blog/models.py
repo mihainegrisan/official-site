@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 from django.db import IntegrityError
 from .utils import unique_slugify
 
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager, self).get_queryset().filter(status='published')

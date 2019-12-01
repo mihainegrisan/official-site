@@ -16,8 +16,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 from taggit.models import Tag
 from .models import Post
-from .forms import ShareByEmailForm
+from .forms import ShareByEmailForm, PostForm
 from urllib.parse import quote_plus
+from pagedown.widgets import PagedownWidget
+from django import forms
 
 
 # ListView uses MultipleObjectMixin (therefor you can use methods like is_paginated in the template)
@@ -115,8 +117,10 @@ class UserPostListView(ListView):
 # post_form.html
 # context_object_name = 'form' - default
 class PostCreateView(LoginRequiredMixin, CreateView):
+    # form_class = PostForm #uncomment if you want to add PagedownWidget
     model = Post
-    fields = ['title', 'tags', 'content']
+    # specifie the fields in the form OR in the view
+    fields = ['title', 'tags', 'content'] # 'status'
 
     # override the form valid method in order to add the author - the user who is submitting the post
     def form_valid(self, form):
@@ -132,6 +136,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         # else:
         #     messages.error(self.request, 'Title already exists!')
         #     return self.form_invalid(form)
+
 
 
 

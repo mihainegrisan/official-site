@@ -13,14 +13,16 @@
   <!-- Font Awesome 4.7 -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
 
-  <!-- {% block title %}{% endblock title %} -->
+
   {% if title %}
     <title>{{ title }}</title>
   {% else %}
     <title>Mihai Blog</title>
   {% endif %}
+
+  {% block head_extra %}{% endblock head_extra %}
 </head>
 <body>
   <div id="fb-root"></div>
@@ -64,14 +66,18 @@
             </div>
           {% endfor %}
         {% endif %}
-        {% block content %}{% endblock %}
+
+        {% block content %}{% endblock content %}
       </div>
-      <div class="col-md-3">
+
+      <div class="col-md-3 mt-4">
         <div class="content-section">
           <h3>Sidebar</h3>
           <p class='text-muted'>Not configured yet
             <ul class="list-group">
               <li class="list-group-item list-group-item-light">Latest Posts</li>
+              <li class="list-group-item list-group-item-light">Subscribe</li>
+              <li class="list-group-item list-group-item-light">Tags</li>
               <li class="list-group-item list-group-item-light">Announcements</li>
               <li class="list-group-item list-group-item-light">About</li>
               <li class="list-group-item list-group-item-light">Contact</li>
@@ -88,5 +94,6 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="{% static 'blog/css/app.js' %}"></script>
 </body>
 </html>

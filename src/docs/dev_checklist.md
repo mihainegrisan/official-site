@@ -15,10 +15,14 @@ Blog app:
 [x] - query posts by tag
 [x] - comments for FB + likes
 [x] - search post feature (make sure it works with pagination)
+[---] - markdown preview in admin and/or front-end
 [ ] - make suggestions for similar posts
 [ ] - my own comments on site
 [ ] - query the latest posts and display them
-[ ] - button to view each post ?
+[ ] - button to view the post_detail each post ?
+[ ] - subscribe feature to receive emails when new posts are published
+[ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
+[ ] - add the draft feature when a user makes a new post and let only the author see it.
 [ ] -
 [ ] -
 [ ] - git branches
@@ -43,12 +47,11 @@ Miscellaneous:
 [x] - honeypot and change admin/ route + environ var for the url
 [x] - change home.html name to post_list.html and all related files
 [x] - split some blocks of code into different templates (ex. pagination)
-[ ] - !? markup preview in admin and/or front-end
-[ ] - block IP addresses
+[x] - customize Admin ()
 [ ] - RSS feed
-[ ] - authentication with email address
+[ ] - block IP addresses
+[ ] - authentication with email address OR username AND password
 [ ] - add Google's two factor authentication https://github.com/Bouke/django-two-factor-auth
-[ ] - customize Admin
 [ ] -
 [ ] -
 [ ] -
