@@ -40,6 +40,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # my own
+    'mybusiness.middleware.SetResponseHeader',
 ]
 
 ROOT_URLCONF = 'mybusiness.urls'
