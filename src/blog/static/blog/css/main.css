@@ -118,3 +118,9 @@ a.article-title:hover {
 .search-bar-round {
   border-radius: 50px;
 }
+
+
+/* stop the markdown preview */
+.wmd-preview{
+  display: none;
+}

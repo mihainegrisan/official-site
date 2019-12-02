@@ -36,7 +36,7 @@
             {{ post.title|capfirst }}</a> -
             {% include 'blog/_time_to_read.html' %}
         </h2>
-        <p class="article-content content-markdown">{{ post.content|truncatewords_html:200 }}</p>
+        <p class="article-content content-markdown">{{ post.content|truncatewords_html:50 }}</p>
       </div>
     </article>
   {% endfor %}

@@ -6,6 +6,9 @@ from taggit.managers import TaggableManager
 from django.template.defaultfilters import slugify
 from django.db import IntegrityError
 from .utils import unique_slugify
+import re
+from markdown_deux import markdown
+from django.utils.safestring import mark_safe
 
 
 class PublishedManager(models.Manager):
@@ -54,7 +57,12 @@ class Post(models.Model):
                              self.slug])
 
     def get_time_to_read(self):
-        return len(self.content) // 150 + 1
+        # result = list(map(lambda x: x.strip(), self.content.split(' ')))
+        result = len(re.findall(r'\w+', self.content))
+        return result // 150 + 1
+
+    def get_markdown(self):
+        return mark_safe(markdown(self.content))
 
     # returns the full url to the instance as a string
     # def get_absolute_url(self):

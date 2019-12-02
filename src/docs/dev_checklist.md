@@ -15,7 +15,13 @@ Blog app:
 [x] - query posts by tag
 [x] - comments for FB + likes
 [x] - search post feature (make sure it works with pagination)
-[---] - markdown preview in admin and/or front-end
+[x] - make images added through url responsive
+[x] - markdown preview in templates
+[--x] - make your own markdown preview
+[--x] - bug in the models - how long does it take to read a post
+[---] - add content-markdown class to the preview form in the -> new post form
+[ ! ] - !bug - code snippets not rendering correctly in templates
+[ ] - markdown preview in admin
 [ ] - make suggestions for similar posts
 [ ] - my own comments on site
 [ ] - query the latest posts and display them
@@ -23,10 +29,10 @@ Blog app:
 [ ] - subscribe feature to receive emails when new posts are published
 [ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
-[ ] - bug in the models - how long does it take to read a post
 [ ] - style the  - new post form -
+[ ] - RSS feed
 [ ] -
-[ ] - 
+[ ] -
 [ ] - git branches
 
 
@@ -50,7 +56,6 @@ Miscellaneous:
 [x] - change home.html name to post_list.html and all related files
 [x] - split some blocks of code into different templates (ex. pagination)
 [x] - customize Admin ()
-[ ] - RSS feed
 [ ] - block IP addresses
 [ ] - authentication with email address OR username AND password
 [ ] - add Google's two factor authentication https://github.com/Bouke/django-two-factor-auth

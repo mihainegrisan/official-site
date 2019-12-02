@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'admin_honeypot',
     'pagedown.apps.PagedownConfig',
     'widget_tweaks',
-    # 'markdown_deux',
+    'markdown_deux',
 ]
 
 MIDDLEWARE = [
