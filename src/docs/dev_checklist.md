@@ -19,8 +19,6 @@ Blog app:
 [x] - markdown preview in templates
 [x] - make your own markdown preview
 [x] - bug in the models - how long does it take to read a post
-[ ] - style the markdown preview
-[---] - add content-markdown class to the preview form in the -> new post form
 [!] - !bug - code snippets not rendering correctly in templates
 [!] - SameOrigin=Strict header  - middleware not working
 [ ] - add markdown preview in admin
@@ -28,14 +26,26 @@ Blog app:
 [ ] - latest posts feature
 [ ] - own comments on site
 [ ] - subscribe feature (receive emails when new posts are published)
-[ ] - button to view the post_detail for each post ?
 [ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
-[ ] - style the  - new post form -
-[ ] - RSS feed
+[ ] - remove the 'sidebar' when updating or making a new post. (post_form.html)
 [ ] -
 [ ] -
+[ ] -
+[ ] -
+[ ] - button to view the post_detail for each post ?
+[ ] - RSS feed ?
 [ ] - git branches
+
+
+CV app (mostly front-end bootstrap 4):
+[ ] - create cv app
+[ ] - create home template
+[ ] - link to the blog
+[ ] -
+[ ] -
+[ ] -
+
 
 
 Users app:

@@ -124,25 +124,3 @@ a.article-title:hover {
 .wmd-preview{
   display: none;
 }
-
-
-.content-markdown pre {
-  background: #d7d7d7 !important;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
-
-}
-
-/* * {
-  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-
-} */
-
-/* .nav-item, .navbar-brand */
-h1, h2, h3, h4, h5, h6, .navbar a {
-  font-family: 'roboto', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
-}
-/* body.roboto {
-  font-family:'roboto', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
-} */

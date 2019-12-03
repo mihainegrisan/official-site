@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'cv.apps.CvConfig',
 
     # third-party apps
     'crispy_forms',
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'storages',
     'admin_honeypot',
+
     'pagedown.apps.PagedownConfig',
     'widget_tweaks',
     'markdown_deux',

@@ -1,4 +1,11 @@
 {% extends 'blog/base.html' %}
+{% load markdownify %}
+{% load static %}
+
+{% block styles %}
+  <!-- Stylesheet for syntax highlight -->
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'blog/css/default.css' %}"> -->
+{% endblock styles %}
 
 {% block content %}
   <div class="row d-flex justify-content-center">
@@ -36,7 +43,7 @@
             {{ post.title|capfirst }}</a> -
             {% include 'blog/_time_to_read.html' %}
         </h2>
-        <p class="article-content content-markdown">{{ post.content|truncatewords_html:50 }}</p>
+        <p class="article-content highlight">{{ post.content|markdownify|safe|truncatewords_html:50 }}</p>
       </div>
     </article>
   {% endfor %}

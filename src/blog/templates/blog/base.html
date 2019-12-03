@@ -13,8 +13,11 @@
   <!-- Font Awesome 4.7 -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+  <!-- My own css for the blog -->
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
 
+  {% block styles %}{% endblock styles %}
+  
 
   {% if title %}
     <title>{{ title }}</title>
@@ -69,6 +72,7 @@
 
         {% block content %}{% endblock content %}
       </div>
+      {% block post_form %}{% endblock post_form %}
 
       <div class="col-md-3 mt-4">
         <div class="content-section">
@@ -95,7 +99,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+  <!-- Syntax highlight -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.min.js"></script>
   <script src="{% static 'blog/js/app.js' %}"></script>
+
 </body>
 </html>
