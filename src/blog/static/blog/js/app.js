@@ -1,11 +1,11 @@
 $(document).ready( () => {
-  $(".content-markdown").each(function() {
-    let content = $(this).text();
-    let markedContent = marked(content);
-    $(this).html(markedContent);
-  });
+  // $(".content-markdown").each(function() {
+  //   let content = $(this).text();
+  //   let markedContent = marked(content);
+  //   $(this).html(markedContent);
+  // });
 
-  $(".content-markdown img").each(function() {
+  $(".post-detail-item img").each(function() {
     $(this).addClass("img-fluid");
   });
 

@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
 
   {% block styles %}{% endblock styles %}
-  
+
 
   {% if title %}
     <title>{{ title }}</title>
@@ -61,7 +61,7 @@
 
   <main role="main" class="container">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-12 col-lg-9">
         {% if messages %}
           {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
@@ -74,7 +74,7 @@
       </div>
       {% block post_form %}{% endblock post_form %}
 
-      <div class="col-md-3 mt-4">
+      <div class="col-12 col-lg-3 mt-1 sidebar">
         <div class="content-section">
           <h3>Sidebar</h3>
           <p class='text-muted'>Not configured yet
@@ -82,7 +82,7 @@
               <li class="list-group-item list-group-item-light">Latest Posts</li>
               <li class="list-group-item list-group-item-light">Subscribe</li>
               <li class="list-group-item list-group-item-light">Tags</li>
-              <li class="list-group-item list-group-item-light">Announcements</li>
+              <li class="list-group-item list-group-item-light ">Announcements</li>
               <li class="list-group-item list-group-item-light">About</li>
               <li class="list-group-item list-group-item-light">Contact</li>
             </ul>

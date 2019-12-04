@@ -115,16 +115,21 @@ a.article-title:hover {
     color: #aaa;
 }
 
+
 .search-bar-round {
   border-radius: 50px;
 }
 
-
+/* change stackoverflow pagedown editor  */
 /* stop the markdown preview */
-.wmd-preview{
+/* .wmd-preview{
   display: none;
-}
-
+} */
+/* .wmd-panel {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  min-width: 400px !important;
+} */
 
 .content-markdown pre {
   background: #d7d7d7 !important;
@@ -136,7 +141,6 @@ a.article-title:hover {
 
 /* * {
   font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-
 } */
 
 /* .nav-item, .navbar-brand */
@@ -145,4 +149,36 @@ h1, h2, h3, h4, h5, h6, .navbar a {
 }
 /* body.roboto {
   font-family:'roboto', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+} */
+
+
+
+
+.list-group-item {
+  width: 100%;
+  word-break: break-all;
+}
+
+.sidebar {
+  font-size: 0.8rem;
+}
+
+.preview-content {
+  width: 100%;
+  word-break: break-all;
+}
+
+/* html { font-size: 1rem; }
+
+@media (min-width: 576px) {
+  html { font-size: 1rem; }
+}
+@media (min-width: 768px) {
+  html { font-size: 1rem; }
+}
+@media (min-width: 992px) {
+  html { font-size: 1.1rem; }
+}
+@media (min-width: 1200px) {
+  html { font-size: 1.2rem; }
 } */

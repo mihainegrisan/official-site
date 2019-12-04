@@ -23,7 +23,7 @@
         {{ post.title|capfirst }} -
         {% include 'blog/_time_to_read.html' %}
       </h2>
-      <p class="article-content content-markdown">{{ post.content|markdownify|safe }}</p>
+      <div class="article-content post-detail-item">{{ post.content|markdownify|safe }}</div>
 
       <!-- Like and Share links -->
       <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>

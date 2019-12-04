@@ -19,7 +19,8 @@ Blog app:
 [x] - markdown preview in templates
 [x] - make your own markdown preview
 [x] - bug in the models - how long does it take to read a post
-[!] - !bug - code snippets not rendering correctly in templates
+[x] - hide sidebar for xs, sm and md screens
+[x] - !bug - code snippets not rendering correctly in templates
 [!] - SameOrigin=Strict header  - middleware not working
 [ ] - add markdown preview in admin
 [ ] - similar posts feature
@@ -28,9 +29,8 @@ Blog app:
 [ ] - subscribe feature (receive emails when new posts are published)
 [ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
-[ ] - remove the 'sidebar' when updating or making a new post. (post_form.html)
-[ ] -
-[ ] -
+[---] - make badges for tags
+[---] - make badges for time_to_read
 [ ] -
 [ ] -
 [ ] - button to view the post_detail for each post ?
