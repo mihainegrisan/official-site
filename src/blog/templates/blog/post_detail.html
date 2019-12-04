@@ -20,8 +20,9 @@
         {% endif %}
       </div>
       <h2 class="article-title">
-        {{ post.title|capfirst }} -
-        {% include 'blog/_time_to_read.html' %}
+        <br>
+        {{ post.title|capfirst }}
+        <br><br>
       </h2>
       <div class="article-content post-detail-item">{{ post.content|markdownify|safe }}</div>
 

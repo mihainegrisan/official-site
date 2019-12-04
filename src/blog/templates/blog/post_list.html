@@ -31,18 +31,21 @@
           <small class="text-muted mr-2">{{ post.date_published|date:"N d, Y" }}</small>
           <small><strong>Tags:</strong>
               {% for tag in post.tags.all %}
-                <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
-                    {{ tag.name }}
+                <a class="badge badge-pill badge-warning text-dark" href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                  <span class="badge-text">{{ tag.name }}</span>
                 </a>
-                {% if not forloop.last %}, {% endif %}
+                {# {% if not forloop.last %}, {% endif %} #}
               {% endfor %}
           </small>
+          <span class="badge badge-pill badge-danger text-white badge-text align-middle">
+            {% include 'blog/_time_to_read.html' %}
+          </span>
           <!-- {# <small class="tags">Tags: {{ post.tags.all|join:", " }}</small> #} -->
         </div>
         <h2>
           <a class="article-title" href="{{ post.get_absolute_url }}">
-            {{ post.title|capfirst }}</a> -
-            {% include 'blog/_time_to_read.html' %}
+            {{ post.title|capfirst }}</a>
+
         </h2>
         <div class="article-content post-detail-item">{{ post.content|markdownify|safe|truncatewords_html:50 }}</div>
       </div>
