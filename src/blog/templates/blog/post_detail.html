@@ -5,19 +5,21 @@
 
 {% block content %}
   <article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
     <div class="media-body">
       <div class="article-metadata">
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
         <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author }}</a>
         <small class="text-muted">{{ post.date_published|date:"N d, Y" }}</small>
         <!-- if the author is the current logged in user -->
-        {% if post.author == user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'blog:post-update' post.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'blog:post-delete' post.id %}">Delete</a>
-            <a class="btn btn-sm mt-1 mb-1" href="{% url 'blog:post_share_by_email' post.id %}">Share</a>
-          </div>
-        {% endif %}
+
+        <div class="float-xs-none float-sm-right">
+          {% if post.author == user %}
+            <a class="btn btn-outline-success btn-sm mt-1 mb-1" href="{% url 'blog:post-update' post.id %}">Update</a>
+            <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'blog:post-delete' post.id %}">Delete</a>
+          {% endif %}
+          <a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{% url 'blog:post_share_by_email' post.id %}">Share</a>
+        </div>
+
       </div>
       <h2 class="article-title">
         <br>
@@ -28,10 +30,9 @@
 
       <!-- Like and Share links -->
       <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-      <hr><br>
       <div class="row">
-        <div class="col-md-12 col-md-offset-1">
-          <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="" data-numposts="5"></div>
+        <div class="col-md-12">
+          <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="100%" data-numposts="5"></div>
         </div>
       </div>
       <!-- <div>

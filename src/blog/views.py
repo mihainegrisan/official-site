@@ -64,6 +64,7 @@ def post_list(request, tag_slug=None):
         'page': page,
         'posts': posts,
         'tag': tag,
+        'section': 'home',
     }
     return render(request, 'blog/post_list.html', context)
 
@@ -75,13 +76,6 @@ class PostDetailView(DetailView):
     # this works but django advises to use get_context_data() !!!
     # self.context["name_to_use"] = "value"
     # Finally I CREATED A METHOD get_time_to_read INSIDE models.py
-
-    # Made a custom filter tag instead of this
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     post = self.get_object()
-    #     context['share_string'] = quote_plus(post.title)
-    #     return context
 
     def get_object(self):
         return get_object_or_404(Post,
@@ -137,6 +131,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         #     messages.error(self.request, 'Title already exists!')
         #     return self.form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = 'new-post'
+        return context
 
 
 
@@ -215,4 +213,4 @@ def post_share(request, pk):
 
 
 def about(request):
-    return render(request, 'blog/about.html', {})
+    return render(request, 'blog/about.html', {'section': 'about'})

@@ -18,7 +18,12 @@ def register(request):
     else:
         form = UserRegisterForm()
 
-    return render(request, 'users/register.html', {'form': form})
+    context = {
+        'form': form,
+        'section': 'register',
+    }
+
+    return render(request, 'users/register.html', context)
 
 @login_required
 def profile(request):
@@ -37,6 +42,7 @@ def profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'section': 'profile',
     }
     return render(request, 'users/profile.html', context)

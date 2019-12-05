@@ -7,11 +7,17 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <!-- Bootstrap 4 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
   <!-- Font Awesome 4.7 -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css -->
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+
+  <!-- CSS material design -->
+  <!-- <link href="{% static 'blog/material_assets/css/material-kit.css' %}" rel="stylesheet" /> -->
 
   <!-- My own css for the blog -->
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
@@ -32,23 +38,26 @@
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=445334359632844&autoLogAppEvents=1"></script>
 
   <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top">
       <div class="container">
         <a class="navbar-brand mr-4" href="{% url 'blog:post_list' %}">Mihai Negrisan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{% url 'blog:post_list' %}">Home</a>
-            <a class="nav-item nav-link" href="{% url 'blog:about' %}">About</a>
+            <a class="nav-item nav-link {% if section == 'home' %}active{% endif %}" href="{% url 'blog:post_list' %}">Home</a>
+            <a class="nav-item nav-link {% if section == 'about' %}active{% endif %}" href="{% url 'blog:about' %}">About</a>
+            <div class="underbar"></div>
           </div>
+
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             {% if user.is_authenticated %}
-              <a class="nav-item nav-link" href="{% url 'blog:post-create' %}">New Post</a>
-              <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-item nav-link {% if section == 'new-post' %}active{% endif %}" href="{% url 'blog:post-create' %}">New Post</a>
+              <a class="nav-item nav-link {% if section == 'profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+              <a class="nav-item nav-link {% if section == 'logout' %}active{% endif %}" href="{% url 'logout' %}">Logout</a>
             {% else %}
               <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
@@ -66,6 +75,9 @@
           {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
               {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+              </button>
             </div>
           {% endfor %}
         {% endif %}
@@ -75,6 +87,105 @@
       {% block post_form %}{% endblock post_form %}
 
       <div class="col-12 col-lg-3 mt-1 sidebar">
+
+        <!-- Tabs with icons on Card -->
+        <div class="card card-nav-tabs mt-5">
+          <div> <!-- class="card-header card-header-primary" -->
+            <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#profile" data-toggle="tab">
+                      <i class="material-icons">face</i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#messages" data-toggle="tab">
+                      <i class="material-icons">chat</i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#settings" data-toggle="tab">
+                      <i class="material-icons">build</i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="tab-content text-center">
+              <div class="tab-pane active" id="profile">
+                <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility...</p>
+              </div>
+              <div class="tab-pane" id="messages">
+                <p> I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers.</p>
+              </div>
+              <div class="tab-pane" id="settings">
+                <p>I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. So when you get something that has the name Kanye West on it, it&#x2019;s supposed ...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Tabs with icons on Card -->
+
+        <!-- Search Widget -->
+        <!-- <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Categories Widget -->
+        <div class="card my-4 mt-5">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4 mt-5">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div>
+
         <div class="content-section">
           <h3>Sidebar</h3>
           <p class='text-muted'>Not configured yet

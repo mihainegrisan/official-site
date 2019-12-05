@@ -19,23 +19,35 @@ Blog app:
 [x] - markdown preview in templates
 [x] - make your own markdown preview
 [x] - bug in the models - how long does it take to read a post
-[x] - hide sidebar for xs, sm and md screens
 [x] - !bug - code snippets not rendering correctly in templates
-[!] - SameOrigin=Strict header  - middleware not working
-[ ] - add markdown preview in admin
+
+[---] - remove all features that a blog doesn't need
 [ ] - similar posts feature
 [ ] - latest posts feature
+[ ] - popular tags (picture on my phone)
+
+[ ] - sending asynchronous emails in production (to a list of subscribers)
+[!] - SameOrigin=Strict header  - middleware not working
+[ ] - add markdown preview in admin
 [ ] - own comments on site
 [ ] - subscribe feature (receive emails when new posts are published)
 [ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
-[---] - make badges for tags
-[---] - make badges for time_to_read
 [ ] -
 [ ] -
 [ ] - button to view the post_detail for each post ?
 [ ] - RSS feed ?
 [ ] - git branches
+
+CSS:
+[x] - hide sidebar for xs, sm and md screens
+[x] - make badges for tags
+[x] - make badges for time_to_read
+[x] - make nav link active when you're on the specific page(except on login)
+[x] - fix menu background on small screens
+[x] - change buttons styles (override bootstrap btn-outline-primary)
+[x] - add google material design to the side content
+
 
 
 CV app (mostly front-end bootstrap 4):
