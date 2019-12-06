@@ -21,10 +21,10 @@ Blog app:
 [x] - bug in the models - how long does it take to read a post
 [x] - !bug - code snippets not rendering correctly in templates
 
-[---] - remove all features that a blog doesn't need
-[ ] - similar posts feature
-[ ] - latest posts feature
-[ ] - popular tags (picture on my phone)
+[ ] - remove all features that a blog doesn't need
+[---] - similar posts feature (widget)
+[---] - latest posts feature (widget)
+[---] - popular tags (picture on my phone) (widget)
 
 [ ] - sending asynchronous emails in production (to a list of subscribers)
 [!] - SameOrigin=Strict header  - middleware not working
@@ -47,6 +47,8 @@ CSS:
 [x] - fix menu background on small screens
 [x] - change buttons styles (override bootstrap btn-outline-primary)
 [x] - add google material design to the side content
+[ ] - change the main card of post_list, post_detail all of them to material design
+[ ] - add underline animation to navbar links
 
 
 

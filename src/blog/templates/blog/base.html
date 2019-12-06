@@ -84,9 +84,12 @@
 
         {% block content %}{% endblock content %}
       </div>
+
       {% block post_form %}{% endblock post_form %}
 
       <div class="col-12 col-lg-3 mt-1 sidebar">
+
+        {% block widget %}{% endblock widget %}
 
         <!-- Tabs with icons on Card -->
         <div class="card card-nav-tabs mt-5">
@@ -145,35 +148,19 @@
 
         <!-- Categories Widget -->
         <div class="card my-4 mt-5">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header">Tags</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Web Design</a>
-                  </li>
-                  <li>
-                    <a href="#">HTML</a>
-                  </li>
-                  <li>
-                    <a href="#">Freebies</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">JavaScript</a>
-                  </li>
-                  <li>
-                    <a href="#">CSS</a>
-                  </li>
-                  <li>
-                    <a href="#">Tutorials</a>
-                  </li>
-                </ul>
-              </div>
+              {% for tag in post.tags.all %}
+                <a class="badge badge-pill badge-warning text-dark" href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                  Messages <span class="badge badge-light">4</span>
+                  <!-- <span class="badge-text">{{ tag.name }}</span> -->
+                </a>
+                {# {% if not forloop.last %}, {% endif %} #}
+              {% endfor %}
+              <button type="button" class="btn btn-sm btn-warning">
+                Messages <span class="badge badge-light">4</span>
+              </button>
             </div>
           </div>
         </div>
@@ -186,7 +173,8 @@
           </div>
         </div>
 
-        <div class="content-section">
+        <!-- Old Sidebar -->
+        <!-- <div class="content-section">
           <h3>Sidebar</h3>
           <p class='text-muted'>Not configured yet
             <ul class="list-group">
@@ -198,7 +186,7 @@
               <li class="list-group-item list-group-item-light">Contact</li>
             </ul>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>

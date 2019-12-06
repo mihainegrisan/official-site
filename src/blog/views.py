@@ -85,16 +85,20 @@ class PostDetailView(DetailView):
                     slug = self.kwargs.get('post_slug'),
                     status = 'published')
 
-# def post_detail(request, year, month, day, post_slug):
-#     post = get_object_or_404(Post,  slug=post_slug,
-#                                     status='published',
-#                                     date_published__year=year,
-#                                     date_published__month=month,
-#                                     date_published__day=day)
-#     context = {
-#         'post': post
-#     }
-#     return render(request, 'blog/post_detail.html', context)
+    def get_context_data(self, **kwargs):
+        # assign the object to the view !!!
+        self.object = self.get_object()
+
+        # List of similar posts
+        post_tags_ids = self.object.tags.values_list('id', flat=True)
+        similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=self.object.id)
+
+        similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-date_published')[:4]
+
+        context = super().get_context_data(**kwargs)
+        context['similar_posts'] = similar_posts
+        return context
+
 
 
 class UserPostListView(ListView):
