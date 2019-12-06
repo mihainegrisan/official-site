@@ -50,14 +50,14 @@ ul {
   margin-bottom: 20px;
 }
 
-.article-title {
+/* .article-title {
   color: #444444;
-}
+} */
 
-a.article-title:hover {
+/* a.article-title:hover {
   color: #428bca;
   text-decoration: none;
-}
+} */
 
 .article-content {
   white-space: pre-line;
@@ -102,6 +102,58 @@ a.article-title:hover {
 }
 
 
+
+/* ---------
+  underline animation
+  ------------ */
+a:hover {
+  color: #701c7e;
+  text-decoration: none;
+}
+.underline {
+  position: relative;
+  color: #444444;
+  text-decoration: none;
+}
+.underline:hover {
+  color: #000;   /* or #701c7e; or #9c27b0; */
+}
+.underline:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #9c27b0;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+.underline:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+
+
+
+
+/* ---------
+  Bootstrap override
+  ------------ */
+.btn-group-sm>.btn, .btn-sm {
+  padding: .15rem .4rem;
+  font-size: .7rem;
+  font-weight: 500;
+}
+
+.badge-primary {
+  background-color: #9c27b0;
+}
 
 
 /* ---------

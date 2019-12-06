@@ -20,11 +20,12 @@ Blog app:
 [x] - make your own markdown preview
 [x] - bug in the models - how long does it take to read a post
 [x] - !bug - code snippets not rendering correctly in templates
+[x] - similar posts feature (widget)
+[x] - popular tags (picture on my phone) (widget)
 
 [ ] - remove all features that a blog doesn't need
-[---] - similar posts feature (widget)
-[---] - latest posts feature (widget)
-[---] - popular tags (picture on my phone) (widget)
+[ ] - latest posts feature (widget)
+[ ] - make sure that tags are case insensitive
 
 [ ] - sending asynchronous emails in production (to a list of subscribers)
 [!] - SameOrigin=Strict header  - middleware not working
