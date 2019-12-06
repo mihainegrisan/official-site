@@ -145,7 +145,7 @@ a:hover {
 /* ---------
   Bootstrap override
   ------------ */
-.btn-group-sm>.btn, .btn-sm {
+.all-tags .btn-sm {
   padding: .15rem .4rem;
   font-size: .7rem;
   font-weight: 500;
