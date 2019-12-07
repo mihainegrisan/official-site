@@ -15,10 +15,18 @@
       <input type="text" class="form-control search-bar-round" name="query" value="{{ request.GET.query }}" placeholder="Search posts">
     </form>
   </div>
-
   {% if tag %}
-      <h2>Posts tagged with "{{ tag.name }}":</h2>
+    {% for tag_object in tags %}
+       {% if tag.name == tag_object.name %}
+        <h3 class="mt-2 mb-2">Posts tagged with
+          <button type="button" class="btn btn-sm btn-warning mb-1">
+            {{ tag.name }} <span class="badge badge-text badge-primary">{{ tag_object.num_times }}</span>
+          </button>
+        </h3>
+      {% endif %}
+    {% endfor %}
   {% endif %}
+
 
   {% for post in posts %}
     <article class="media content-section">

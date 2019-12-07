@@ -28,6 +28,23 @@ ul {
   margin: 0;
 }
 
+a {
+  color: #9c27b0;
+}
+
+a:hover {
+  color: #701c7e;
+  text-decoration: none;
+}
+
+
+/* .navbar-brand {
+  color: #000;
+  text-shadow: 0 0 1px #111;
+} */
+
+
+
 .site-header .navbar-nav .nav-link {
   color: #555555;
 }
@@ -103,13 +120,16 @@ ul {
 
 
 
+.similar-posts a {
+  color: #9c27b0;
+}
+
+
+
+
 /* ---------
   underline animation
   ------------ */
-a:hover {
-  color: #701c7e;
-  text-decoration: none;
-}
 .underline {
   position: relative;
   color: #444444;
@@ -162,7 +182,6 @@ a:hover {
 .btn-outline-primary {
   color: #9c27b0;
   border-color: #9c27b0;
-
 }
 .btn-outline-primary:hover {
     color: #fff;
@@ -280,23 +299,18 @@ a:hover {
 .sidebar {
   font-size: 0.8rem;
 }
-/* .my-4 ul {
-  text-decoration: none;
-} */
-.my-4 li:hover {
+
+/* Weird hover .. text going up */
+/* .my-4 li:hover {
   -webkit-transition: 0.5s ease;
   cursor: pointer;
   text-shadow: 0px -2px 0px #000000, 0 0 5px rgba(255, 255, 255, 0.8), 0 -4px 15px rgba(255, 255, 255, 0.5);
-}
+} */
 .my-4 a:hover {
   text-decoration: none;
 }
 
 
-
-a {
-  color: #9c27b0;
-}
 
 
 .card {
@@ -460,13 +474,6 @@ img {
 
 
 
-
-
-
-
-
-
-
 /* --------------
   UNDERLINE ANIMATION
 ----------------- */
@@ -508,14 +515,6 @@ img {
   background: rgba(150, 250, 250, 0.5);
   box-shadow: 0 0 10px #46fafa;
 } */
-
-
-
-
-
-
-
-
 
 
 
