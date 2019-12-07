@@ -1,0 +1,7 @@
+<ul class="list-unstyled mb-0">
+  {% for post in latest_posts %}
+    <li>
+        <a class="underline" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load show_latest_posts %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +92,15 @@
 
         {% block widget %}{% endblock widget %}
 
+        <div class="card my-4 mt-5 text-center links-inside">
+          <h5 class="card-header">Latest Posts</h5>
+          <div class="card-body">
+            <ul class="list-unstyled mb-0">
+              {% show_latest_posts 3 %}
+            </ul>
+          </div>
+        </div>
+
         <!-- Tabs with icons on Card -->
         <div class="card card-nav-tabs mt-5">
           <div> <!-- class="card-header card-header-primary" -->
@@ -164,14 +174,6 @@
                 Messages <span class="badge badge-light">4</span>
               </button> -->
             </div>
-          </div>
-        </div>
-
-        <!-- Side Widget -->
-        <div class="card my-4 mt-5 text-center">
-          <h5 class="card-header">Side Widget</h5>
-          <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
           </div>
         </div>
 

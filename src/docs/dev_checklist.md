@@ -22,9 +22,9 @@ Blog app:
 [x] - !bug - code snippets not rendering correctly in templates
 [x] - similar posts feature (widget)
 [x] - popular tags (picture on my phone) (widget)
+[x] - latest posts feature (widget)
 
 [ ] - remove all features that a blog doesn't need
-[ ] - latest posts feature (widget)
 [ ] - make sure that tags are case insensitive
 
 [ ] - sending asynchronous emails in production (to a list of subscribers)
