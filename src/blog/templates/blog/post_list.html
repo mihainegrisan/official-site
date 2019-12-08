@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load markdownify %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block styles %}
   <!-- Stylesheet for syntax highlight -->
@@ -8,6 +9,33 @@
 {% endblock styles %}
 
 {% block content %}
+  <!-- Newsletter Section-->
+  <section class="newsletter no-padding-top mb-4">
+    <div class="container">
+      <div class="row alert">
+        <div class="col-md-7">
+          <h2>Subscribe to Newsletter</h2>
+          <p class="text-big">Receive emails once a month with the lates posts.</p>
+        </div>
+        <div class="close-newsletter">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+        </div>
+        <div class="col-md-8">
+          <div class="form-holder">
+            <form action="{% url 'marketing:email-list-signup' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ form|crispy }}
+                  <button type="submit" class="submit">Signup</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Search bar -->
   <div class="row d-flex justify-content-center">
     <form method='GET' action="" class="form-group has-search col-md-5">

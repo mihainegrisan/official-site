@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'cv.apps.CvConfig',
+    'marketing.apps.MarketingConfig',
 
     # third-party apps
     'crispy_forms',
@@ -117,3 +118,9 @@ AWS_S3_REGION_NAME = 'eu-central-1'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # To allow django-admin.py collectstatic to automatically put your static files in your bucket set the following in your settings.py:
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# MAILCHIMP
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
+MAILCHIMP_DATA_CENTER = os.environ.get('MAILCHIMP_DATA_CENTER')
+MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')

@@ -24,19 +24,23 @@ Blog app:
 [x] - popular tags (picture on my phone) (widget)
 [x] - latest posts feature (widget)
 
+[---] - subscribe feature (receive emails when new posts are published)
+[ ] - when new users make an account, subscribe them to the newsletter
+[ ] - button to view the post_detail for each post ?
 [ ] - remove all features that a blog doesn't need
-[ ] - make sure that tags are case insensitive
+[ ] - REST API
+[ ] - delete unused tags (signals)
+[ ] - !bug - when in xs the links from navbar still have the underline class 
 
+[ ] - how? make sure that tags are case insensitive (which one is the view.. I see only form and template so where to put the logic?)
 [ ] - sending asynchronous emails in production (to a list of subscribers)
 [!] - SameOrigin=Strict header  - middleware not working
-[ ] - add markdown preview in admin
+[ ] - ? add markdown preview in admin
 [ ] - own comments on site
-[ ] - subscribe feature (receive emails when new posts are published)
-[ ] - add feature to be able to 'schedule' a post. The users should not be able to see them. (SelectDateWidget)
+[ ] - add feature to be able to 'schedule' a post (to choose a future date). The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
 [ ] -
 [ ] -
-[ ] - button to view the post_detail for each post ?
 [ ] - RSS feed ?
 [ ] - git branches
 

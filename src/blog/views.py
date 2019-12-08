@@ -17,9 +17,8 @@ from django.db.models import Count, Q
 from taggit.models import Tag
 from .models import Post
 from .forms import ShareByEmailForm, PostForm
-from urllib.parse import quote_plus
-from pagedown.widgets import PagedownWidget
-from django import forms
+# from pagedown.widgets import PagedownWidget
+from marketing.forms import EmailSignupForm
 
 
 # ListView uses MultipleObjectMixin (therefor you can use methods like is_paginated in the template)
@@ -34,6 +33,7 @@ class PostListView(ListView):
 
 def post_list(request, tag_slug=None):
     object_list = Post.published.all()
+    form = EmailSignupForm()
 
     # search posts feature
     query = request.GET.get('query')
@@ -65,6 +65,7 @@ def post_list(request, tag_slug=None):
         'posts': posts,
         'tag': tag,
         'section': 'home',
+        'form': form,
     }
     return render(request, 'blog/post_list.html', context)
 
