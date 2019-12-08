@@ -1,5 +1,22 @@
 $(document).ready( () => {
 
+  const btn = $('#back-to-top-button');
+
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > 300) {
+      btn.addClass('show');
+    } else {
+      btn.removeClass('show');
+    }
+  });
+
+  btn.on('click', function(e) {
+    e.preventDefault();
+    $('html, body').animate({scrollTop:0}, '300');
+  });
+
+
+
   // $(window).scroll(function() { // check if scroll event happened
   //   if ($(document).scrollTop() > 50) { // check if user scrolled more than 50 from top of the browser window
   //     $(".navbar").css("background-color", "#f4f4f4"); // if yes, then change the color of class "navbar-fixed-top" to white (#f8f8f8)
