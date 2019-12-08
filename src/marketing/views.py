@@ -30,7 +30,7 @@ def subscribe(email):
     return r.status_code, r.json()
 
 
-def email_list_signup(requests):
+def email_list_signup(request):
     form = EmailSignupForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -40,5 +40,6 @@ def email_list_signup(requests):
             else:
                 subscribe(form.instance.email)
                 form.save()
+                messages.success(request, 'Congrats! You are now subscribed to my email list!')
     # REDIRECT back to where the request was made
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

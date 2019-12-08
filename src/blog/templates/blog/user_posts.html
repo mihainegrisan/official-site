@@ -1,20 +1,31 @@
 {% extends 'blog/base.html' %}
-{# {% load blog_tags %} #}
+{% load markdownify %}
 
 {% block content %}
   <!-- to get the username that is passed in to the url -->
   <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
   {% for post in posts %}
     <article class="media content-section">
-      <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+      {% comment %}
+      <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="profile-pic">
+      {% endcomment %}
       <div class="media-body">
         <div class="article-metadata">
           <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author }}</a>
           <small class="text-muted">{{ post.date_published|date:"N d, Y" }}</small>
+          <small><strong>Tags:</strong>
+              {% for tag in post.tags.all %}
+                <a class="badge badge-warning text-dark" href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                  <span class="badge-text">{{ tag.name }}</span>
+                </a>
+              {% endfor %}
+          </small>
+          <span class="badge badge-danger text-white badge-text align-middle">
+            {% include 'blog/_time_to_read.html' %}
+          </span>
         </div>
         <h2><a class="article-title" href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-        <p class="article-content content-markdown">{{ post.content|truncatewords_html:30 }}</p>
-        <!-- add in post_detail -> {{ post.content|markdown }} -->
+        <p class="article-content">{{ post.content|markdownify|safe|truncatewords_html:50 }}</p>
       </div>
     </article>
   {% endfor %}

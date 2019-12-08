@@ -28,10 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'storages',
     'admin_honeypot',
-
-    'pagedown.apps.PagedownConfig',
     'widget_tweaks',
-    'markdown_deux',
 ]
 
 MIDDLEWARE = [

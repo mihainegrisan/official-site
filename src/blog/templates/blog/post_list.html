@@ -36,6 +36,7 @@
       </div>
     </div>
   </section>
+
   <!-- Search bar -->
   <div class="row d-flex justify-content-center">
     <form method='GET' action="" class="form-group has-search col-md-5">
@@ -43,6 +44,7 @@
       <input type="text" class="form-control search-bar-round" name="query" value="{{ request.GET.query }}" placeholder="Search posts">
     </form>
   </div>
+
   {% if tag %}
     {% for tag_object in tags %}
        {% if tag.name == tag_object.name %}

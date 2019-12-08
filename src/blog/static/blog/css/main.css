@@ -580,9 +580,15 @@ section.newsletter .submit {
 }
 
 
-@media (min-width: 500px) {
+@media (max-width: 500px) {
   #back-to-top-button {
     margin: 30px;
+    width: 40px;
+    height: 40px;
+  }
+  #back-to-top-button::after {
+    font-size: 1.5em;
+    line-height: 40px;
   }
 }
 
