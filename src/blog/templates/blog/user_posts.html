@@ -3,9 +3,9 @@
 
 {% block content %}
   <!-- to get the username that is passed in to the url -->
-  <div class="mb-3 d-flex align-items-center">
-    <h1 class="d-inline mr-4">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
-    <img class="rounded-circle article-img-user-posts" src="{{ author.profile.image.url }}" alt="profile-pic">
+  <div class="mb-3 d-flex flex-column align-items-center">
+    <img class="rounded-circle article-img-user-posts mb-3" src="{{ author.profile.image.url }}" alt="profile-pic">
+    <h1>{{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
   </div>
   {% for post in posts %}
     <article class="media">

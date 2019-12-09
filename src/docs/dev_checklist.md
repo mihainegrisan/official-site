@@ -25,8 +25,8 @@ Blog app:
 [x] - latest posts feature (widget)
 [x] - subscribe feature (receive emails when new posts are published)
 [x] - add material design cards to the blog posts in every template related
+[x] - when you click on a user, show his image above his name in user_posts.html
 
-[ ] - when you click on a user ... show his image next to his name in user_posts.html
 [ ] - remove unnecessary files and libraries
 [ ] - when new users make an account, subscribe them to the newsletter
 [ ] - button to view the post_detail for each post ?
