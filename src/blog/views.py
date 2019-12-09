@@ -28,7 +28,7 @@ class PostListView(ListView):
     # queryset = Post.objects.all() # Default: Model.objects.all()
     # template_name = 'blog/post_list.html' # Default: <app_label>/<model_name>_list.html
     # ordering = ['-date_published'] # change the ordering here or in the model
-    paginate_by = 3 # passes page_obj object into the template
+    paginate_by = 4 # passes page_obj object into the template
 
 
 def post_list(request, tag_slug=None):
@@ -106,12 +106,21 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts' # object_list - default
-    paginate_by = 3
+    paginate_by = 4
+
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.published.filter(author=user).order_by('-date_published')
+        self.user = self.get_object()
+        return Post.published.filter(author=self.user).order_by('-date_published')
 
+    def get_context_data(self, **kwargs):
+        # assign the object to the view !!!
+        self.user = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['author'] = self.user
+        return context
 
 # post_form.html
 # context_object_name = 'form' - default
