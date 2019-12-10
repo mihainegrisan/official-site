@@ -1,6 +1,4 @@
-*,
-*::before,
-*::after {
+* {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -79,9 +77,9 @@ img {
   min-width: 320px;
 } */
 
-/* .article-title {
-  color: #444444;
-} */
+.article-title {
+  margin: 15px 0 20px 0;
+}
 
 /* a.article-title:hover {
   color: #428bca;
@@ -145,7 +143,7 @@ img {
   underline animation
   ------------ */
 
-@media (min-width: 767px) {
+@media (min-width: 768px) {
   .underline {
     position: relative;
     color: #444444;
@@ -291,6 +289,7 @@ img {
 .search-bar-round {
   border-radius: 5px;
 }
+
 
 
 

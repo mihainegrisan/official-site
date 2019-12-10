@@ -26,25 +26,27 @@ Blog app:
 [x] - subscribe feature (receive emails when new posts are published)
 [x] - add material design cards to the blog posts in every template related
 [x] - when you click on a user, show his image above his name in user_posts.html
+[x] - !bug - when in xs the links from navbar(that is now a menu) still have the underline class
+[x] - add a footer and copyright
+[x] - delete unused tags (made it with management command not signals)
 
+[ ] - add the search in every view as a widget or in the navbar
 [ ] - remove unnecessary files and libraries
 [ ] - when new users make an account, subscribe them to the newsletter
 [ ] - button to view the post_detail for each post ?
-[ ] - delete unused tags (signals)
-[ ] - !bug - when in xs the links from navbar(that is now a menu) still have the underline class
 [ ] - create an email marketing campaign on mailchimp
 [ ] - remove all features that a blog doesn't need
+[ ] - !bug - underline class only works on screen sizes > 767px so the links won't work if it's less... they will also be purple (leave it like this?)
 [ ] - REST API
 [ ] - !bug markdown not rendering in preview for new_post
 
 [ ] - how? make sure that tags are case insensitive (which one is the view.. I see only form and template so where to put the logic?)
-[!] - SameOrigin=Strict header  - middleware not working
 [ ] - add feature to be able to 'schedule' a post (to choose a future date). The users should not be able to see them. (SelectDateWidget)
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
-[ ] - own comments on site
+
 [ ] - ? add markdown preview in admin
-[ ] -
-[ ] -
+[ ] - own comments on site
+[!] - SameOrigin=Strict header  - middleware not working
 [ ] - sending asynchronous emails in production (to a list of subscribers)
 [ ] - RSS feed ?
 [ ] - git branches

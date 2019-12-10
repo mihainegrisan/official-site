@@ -38,8 +38,10 @@ def post_list(request, tag_slug=None):
     # search posts feature
     query = request.GET.get('query')
     if query:
+        query = query.strip()
         object_list = object_list.filter(
             Q(title__icontains=query) |
+            Q(tags__name__icontains=query) |
             Q(content__icontains=query) |
             Q(author__username__icontains=query)
             ).distinct()
