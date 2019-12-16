@@ -39,6 +39,11 @@ class Item(models.Model):
             'slug': self.slug
         })
 
+    def get_remove_from_cart_url(self):
+        return reverse('ecommerce:remove-from-cart', kwargs={
+            'slug': self.slug
+        })
+
     # def save(self, *args, **kwargs):
     #     # unique_slugify(self, self.title)
     #     # super(Item, self).save(**kwargs)
