@@ -31,7 +31,12 @@ urlpatterns = [
     path('', include('cv.urls')),
     path('marketing/', include('marketing.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-         name='django.contrib.sitemaps.views.sitemap'),
+        name='django.contrib.sitemaps.views.sitemap'),
+    path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
+
+    path('rest/', include('core.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]
 
 if settings.DEBUG or settings.TESTING_MODE:

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'cv.apps.CvConfig',
     'marketing.apps.MarketingConfig',
+    'ecommerce.apps.EcommerceConfig',
 
     # third-party apps
     'crispy_forms',
@@ -29,6 +30,9 @@ INSTALLED_APPS = [
     'storages',
     'admin_honeypot',
     'widget_tweaks',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +125,10 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = os.environ.get('MAILCHIMP_DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
