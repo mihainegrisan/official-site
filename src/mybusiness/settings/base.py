@@ -30,9 +30,15 @@ INSTALLED_APPS = [
     'storages',
     'admin_honeypot',
     'widget_tweaks',
+
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+
+    # Allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +59,9 @@ ROOT_URLCONF = 'mybusiness.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,8 +97,9 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog:post_list' # change to post.get_absolute_url()?
-LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'ecommerce:home'
+# LOGIN_REDIRECT_URL = 'blog:post_list'
+# LOGIN_URL = 'login'
 
 # I'm changing just the tag of the error so that bootstrap4 alert and messages tags to be the same (danger).
 # so messages.error -> tags == danger
@@ -132,3 +141,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# Allauth
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
