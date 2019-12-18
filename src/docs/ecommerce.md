@@ -7,7 +7,7 @@
 [ ] - add all-auth (separate ecommerce accounts from blog accounts)
 [ ] - !bug style templates not working
 [ ] - !bug messages/alert close button not working
-[ ] -
+[ ] - LOGIN_REDIRECT_URL is not dynamic
 [ ] -
 [ ] -
 [ ] - message when user adds an item to the cart

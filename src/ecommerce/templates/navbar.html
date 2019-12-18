@@ -20,12 +20,12 @@
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
           {% comment %} <li class="nav-item active">
-            <a class="nav-link waves-effect" href="/">Home
+            <a class="nav-link waves-effect" href="{% url 'ecommerce:home' %}">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="/checkout">
+            <a class="nav-link waves-effect" href="{% url 'ecommerce:checkout' %}">
             Checkout</a>
           </li> {% endcomment %}
         </ul>
@@ -34,7 +34,7 @@
         <ul class="navbar-nav nav-flex-icons">
           {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link waves-effect">
+            <a href="{% url 'ecommerce:order-summary' %}" class="nav-link waves-effect">
               <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
               <i class="fas fa-shopping-cart"></i>
               <span class="clearfix d-none d-sm-inline-block"> Cart </span>
