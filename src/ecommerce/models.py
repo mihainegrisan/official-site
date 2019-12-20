@@ -13,7 +13,7 @@ CATEGORY_CHOICES = (
 ('OW', 'Outwear'),
 )
 
-LABEL_CHOICES = (
+LABEL_COLOR_CHOICES = (
 ('P', 'primary'),
 ('S', 'secondary'),
 ('D', 'danger'),
@@ -25,8 +25,10 @@ class Item(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    label_color = models.CharField(choices=LABEL_COLOR_CHOICES, max_length=1)
+    label_text = models.CharField(max_length=20)
     description = models.TextField()
+    image = models.ImageField()
 
 
     def __str__(self):
@@ -94,7 +96,14 @@ class Cart(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
-    billing_address = models.ForeignKey('BillingAddress',
+    billing_address = models.ForeignKey(
+        'BillingAddress',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    payment = models.ForeignKey(
+        'Payment',
         on_delete=models.SET_NULL,
         blank=True,
         null=True
@@ -121,4 +130,20 @@ class BillingAddress(models.Model):
     zip = models.CharField(max_length=100)
 
     def __str__(self):
+        return self.user.username
+
+
+
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL, # DOES NOT DELETE THE PAYMENT IF THE USER IS DELETED
+        blank=True,
+        null=True
+    )
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def _str__(self):
         return self.user.username

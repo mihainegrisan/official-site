@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
@@ -6,14 +7,11 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item, CartItem, Cart, BillingAddress
+from .models import Item, CartItem, Cart, BillingAddress, Payment
 from .forms import CheckoutForm
+import stripe
 
-def products(request):
-    context = {
-        'items': Item.objects.all(),
-    }
-    return render(request, 'products.html', context)
+stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 
 class CheckoutView(View):
@@ -50,15 +48,95 @@ class CheckoutView(View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                # TODO: add a redirect to the selected payment option
-                return redirect('ecommerce:checkout')
 
-            messages.warning(self.request, 'Failed checkout')
-            return redirect('ecommerce:checkout')
+                if payment_option == 'S':
+                    return redirect('ecommerce:payment', payment_option='stripe')
+                elif payment_option == 'P':
+                    return redirect('ecommerce:payment', payment_option='paypal')
+                else:
+                    messages.warning(self.request, 'Invalid payment option selected')
+                    return redirect('ecommerce:checkout')
 
         except ObjectDoesNotExist:
             messages.error(self.request, "You don't have an active order.")
             return redirect('ecommerce:order-summary')
+
+
+class PaymentView(View):
+    def get(self, *args, **kwargs):
+        cart = Cart.objects.get(user=self.request.user, ordered=False)
+        context = {
+            'cart': cart,
+        }
+        return render(self.request, 'payment.html', context)
+
+    def post(self, *args, **kwargs):
+        cart = Cart.objects.get(user=self.request.user, ordered=False)
+        token = self.request.POST.get('stripeToken')
+
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=int(cart.get_total() * 100), # cents
+                currency="eur",
+                source=token,
+            )
+
+            # create the payment
+            payment = Payment()
+            payment.stripe_charge_id = intent['id']
+            payment.user = self.request.user
+            payment.amount = int(cart.get_total())
+            payment.save()
+
+            cart_items = cart.items.all()
+            cart_items.update(ordered=True)
+            for cart_item in cart_items:
+                cart_item.save()
+
+            # assign the payment to the order/cart
+            cart.ordered = True
+            cart.payment = payment
+            cart.save()
+
+            messages.success(self.request, "Your order was successful!")
+            return redirect('ecommerce:home')
+
+        except stripe.error.CardError as e:
+            messages.error(self.request, f"{e.error.message}")
+            return redirect('ecommerce:home')
+
+        except stripe.error.RateLimitError as e:
+            # Too many requests made to the API too quickly
+            messages.error(self.request, "Rate limit error")
+            return redirect('ecommerce:home')
+
+        except stripe.error.InvalidRequestError as e:
+            # Invalid parameters were supplied to Stripe's API
+            messages.error(self.request, "Invalid parameters")
+            return redirect('ecommerce:home')
+
+        except stripe.error.AuthenticationError as e:
+            # Authentication with Stripe's API failed
+            # (maybe you changed API keys recently)
+            messages.error(self.request, "Not authenticated")
+            return redirect('ecommerce:home')
+
+        except stripe.error.APIConnectionError as e:
+            # Network communication with Stripe failed
+            messages.error(self.request, "Network error")
+            return redirect('ecommerce:home')
+
+        except stripe.error.StripeError as e:
+            # Display a very generic error to the user, and maybe send
+            # yourself an email
+            messages.error(self.request, "Something went wrong. You were not charged. Please try again.")
+            return redirect('ecommerce:home')
+
+        except Exception as e:
+            # Something else happened, completely unrelated to Stripe
+            # send an email to ourselves
+            messages.error(self.request, "A serious error occured. We have been notified.")
+            return redirect('ecommerce:home')
 
 
 
@@ -66,7 +144,7 @@ class HomeView(ListView):
     model = Item
     template_name = 'home.html'
     context_object_name = 'items' #object_list
-    paginate_by = 1
+    paginate_by = 10
 
 
 
