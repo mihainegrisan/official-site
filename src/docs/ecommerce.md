@@ -8,10 +8,11 @@
 [x] - order_summary
 [x] - checkout
 [x] - payment with stripe
-[ ] - coupons
-[ ] - !bug style templates not working
+[---] - coupons
 [ ] - !bug messages/alert close button not working
 [ ] - LOGIN_REDIRECT_URL is not dynamic
 [ ] -
-[ ] - image field to Item model, bug fixed
+[ ] -
+[ ] - style the admin
+[ ] - make a search bar
 [ ] - message when user adds an item to the cart?

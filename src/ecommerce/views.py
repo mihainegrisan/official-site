@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item, CartItem, Cart, BillingAddress, Payment
-from .forms import CheckoutForm
+from .models import Item, CartItem, Cart, BillingAddress, Payment, Coupon
+from .forms import CheckoutForm, CouponForm
 import stripe
 
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
@@ -17,11 +17,19 @@ stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 class CheckoutView(View):
 
     def get(self, *args, **kwargs):
-        form = CheckoutForm()
-        context = {
-            'form': form,
-        }
-        return render(self.request, 'checkout.html', context)
+        try:
+            cart = Cart.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'form': CheckoutForm(),
+                'couponform': CouponForm(),
+                'cart': cart,
+                'DISPLAY_COUPON_FORM': True,
+            }
+            return render(self.request, 'checkout.html', context)
+        except ObjectDoesNotExist:
+            messages.info(self.request, "You don't have an active order")
+            return redirect('ecommerce:checkout')
+
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
@@ -58,17 +66,22 @@ class CheckoutView(View):
                     return redirect('ecommerce:checkout')
 
         except ObjectDoesNotExist:
-            messages.error(self.request, "You don't have an active order.")
+            messages.error(self.request, "You don't have an active order")
             return redirect('ecommerce:order-summary')
 
 
 class PaymentView(View):
     def get(self, *args, **kwargs):
         cart = Cart.objects.get(user=self.request.user, ordered=False)
-        context = {
-            'cart': cart,
-        }
-        return render(self.request, 'payment.html', context)
+        if cart.billing_address:
+            context = {
+                'cart': cart,
+                'DISPLAY_COUPON_FORM': False,
+            }
+            return render(self.request, 'payment.html', context)
+        else:
+            messages.error(self.request, "You haven't added a billing address")
+            return redirect('ecommerce:checkout')
 
     def post(self, *args, **kwargs):
         cart = Cart.objects.get(user=self.request.user, ordered=False)
@@ -147,6 +160,11 @@ class HomeView(ListView):
     paginate_by = 10
 
 
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'product.html'
+    context_object_name = 'item' #object
+
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -159,12 +177,6 @@ class OrderSummaryView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             messages.error(self.request, "You don't have an active order.")
             return redirect('/ecommerce/')
-
-
-class ItemDetailView(DetailView):
-    model = Item
-    template_name = 'product.html'
-    context_object_name = 'item' #object
 
 
 @login_required
@@ -259,3 +271,29 @@ def remove_single_item_from_cart(request, slug):
     else:
         messages.info(request, "You don't have an active order")
         return redirect('ecommerce:product', slug=slug)
+
+
+def get_coupon(request, code):
+    try:
+        coupon = Coupon.objects.get(code=code)
+        return coupon
+    except ObjectDoesNotExist:
+        messages.info(request, "This coupon does not exist")
+        return redirect('ecommerce:checkout')
+
+
+
+class AddCouponView(View):
+    def post(self, *args, **kwargs):
+        form = CouponForm(self.request.POST or None)
+        if form.is_valid():
+            try:
+                code = form.cleaned_data.get('code')
+                cart = Cart.objects.get(user=self.request.user, ordered=False)
+                cart.coupon = get_coupon(self.request, code)
+                cart.save()
+                messages.success(self.request, "Successfully added coupon")
+                return redirect('ecommerce:checkout')
+            except ObjectDoesNotExist:
+                messages.info(self.request, "You don't have an active order")
+                return redirect('ecommerce:checkout')
