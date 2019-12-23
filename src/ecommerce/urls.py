@@ -13,4 +13,5 @@ urlpatterns = [
     path('remove-from-cart/<slug>/', views.remove_from_cart, name='remove-from-cart'),
     path('remove-single-item-from-cart/<slug>/', views.remove_single_item_from_cart, name='remove-single-item-from-cart'),
     path('payment/<payment_option>/', views.PaymentView.as_view(), name='payment'),
+    path('request-refund/', views.RequestRefundView.as_view(), name='request-refund'),
 ]
