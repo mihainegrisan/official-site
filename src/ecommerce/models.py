@@ -8,15 +8,20 @@ from django_countries.fields import CountryField
 
 
 CATEGORY_CHOICES = (
-('S', 'Shirt'),
-('SW', 'Sport wear'),
-('OW', 'Outwear'),
+    ('S', 'Shirt'),
+    ('SW', 'Sport wear'),
+    ('OW', 'Outwear'),
 )
 
 LABEL_COLOR_CHOICES = (
-('P', 'primary'),
-('S', 'secondary'),
-('D', 'danger'),
+    ('P', 'primary'),
+    ('S', 'secondary'),
+    ('D', 'danger'),
+)
+
+ADDRESS_CHOICES = (
+    ('B', 'Billing'),
+    ('S', 'Shipping'),
 )
 
 class Item(models.Model):
@@ -92,13 +97,21 @@ class Cart(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    ref_code = models.CharField(max_length=20)
+    ref_code = models.CharField(max_length=20, blank=True, null=True)
     items = models.ManyToManyField(CartItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     billing_address = models.ForeignKey(
-        'BillingAddress',
+        'Address',
+        related_name='billing_address',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    shipping_address = models.ForeignKey(
+        'Address',
+        related_name='shipping_address',
         on_delete=models.SET_NULL,
         blank=True,
         null=True
@@ -143,7 +156,7 @@ class Cart(models.Model):
         return total
 
 
-class BillingAddress(models.Model):
+class Address(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -152,9 +165,14 @@ class BillingAddress(models.Model):
     apartment_address = models.CharField(max_length=100)
     country = CountryField(multiple=False)
     zip = models.CharField(max_length=100)
+    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
+    default = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Addresses'
 
 
 

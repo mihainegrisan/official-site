@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, CartItem, Cart, Payment, Coupon, Refund
+from .models import Item, CartItem, Cart, Payment, Coupon, Refund, Address
 
 def make_refund_accepted(modeladmin, request, queryset):
     queryset.update(
@@ -17,11 +17,13 @@ class CartAdmin(admin.ModelAdmin):
                     'received',
                     'refund_requested',
                     'refund_granted',
+                    'shipping_address',
                     'billing_address',
                     'payment',
                     'coupon',]
     list_display_links = [
         'user',
+        'shipping_address',
         'billing_address',
         'payment',
         'coupon',
@@ -37,9 +39,25 @@ class CartAdmin(admin.ModelAdmin):
     ]
     actions = [make_refund_accepted]
 
+
+class AddressAdmin(admin.ModelAdmin):
+    list_display = [
+        'user',
+        'street_address',
+        'apartment_address',
+        'country',
+        'zip',
+        'address_type',
+        'default'
+    ]
+    list_filter = ['default', 'address_type', 'country']
+    search_fields = ['user', 'street_address', 'apartment_address', 'zip']
+
+
 admin.site.register(Item)
 admin.site.register(CartItem)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(Payment)
 admin.site.register(Coupon)
 admin.site.register(Refund)
+admin.site.register(Address, AddressAdmin)
