@@ -15,8 +15,9 @@ from .models import (
     Payment,
     Coupon,
     Refund,
+    UserProfile,
 )
-from .forms import CheckoutForm, CouponForm, RefundForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 
 import random
 import string
@@ -203,6 +204,21 @@ class PaymentView(View):
                 'cart': cart,
                 'DISPLAY_COUPON_FORM': False,
             }
+
+            userprofile = self.request.user.userprofile
+            if userprofile.one_click_purchasing:
+                # fetch the users card list
+                cards = stripe.Customer.list_sources(
+                    userprofile.stripe_customer_id,
+                    limit=3,
+                    object='card',
+                )
+                card_list = cards['data']
+                if len(card_list) > 0:
+                    # update the context with the default card
+                    context.update({
+                        'card': card_list[0],
+                    })
             return render(self.request, 'payment.html', context)
         else:
             messages.error(self.request, "You haven't added a billing address")
@@ -210,72 +226,103 @@ class PaymentView(View):
 
     def post(self, *args, **kwargs):
         cart = Cart.objects.get(user=self.request.user, ordered=False)
-        token = self.request.POST.get('stripeToken')
+        form = PaymentForm(self.request.POST)
+        userprofile = UserProfile.objects.get(user=self.request.user)
+        if form.is_valid():
+            token = form.cleaned_data.get('stripeToken')
+            save = form.cleaned_data.get('save')
+            use_default = form.cleaned_data.get('use_default')
 
-        try:
-            intent = stripe.PaymentIntent.create(
-                amount=int(cart.get_total() * 100), # cents
-                currency="eur",
-                source=token,
-            )
+            if save:
+                # allow to fetch cards
+                if not userprofile.stripe_customer_id:
+                    customer = stripe.Customer.create(
+                        email=self.request.user.email,
+                        source=token,
+                    )
+                    userprofile.stripe_customer_id = customer['id']
+                    userprofile.one_click_purchasing = True
+                    userprofile.save()
+                else:
+                    # if the userprofile does already exist
+                    stripe.Customer.create_source(
+                        userprofile.stripe_customer_id,
+                        source=token
+                    )
 
-            # create the payment
-            payment = Payment()
-            payment.stripe_charge_id = intent['id']
-            payment.user = self.request.user
-            payment.amount = int(cart.get_total())
-            payment.save()
+            amount = int(cart.get_total() * 100)
 
-            cart_items = cart.items.all()
-            cart_items.update(ordered=True)
-            for cart_item in cart_items:
-                cart_item.save()
+            try:
+                if use_default:
+                    intent = stripe.PaymentIntent.create(
+                        amount=amount, # cents
+                        currency="usd",
+                        customer=userprofile.stripe_customer_id,
+                    )
+                else:
+                    intent = stripe.PaymentIntent.create(
+                        amount=amount, # cents
+                        currency="usd",
+                        source=token,
+                    )
 
-            # assign the payment to the order/cart
-            cart.ordered = True
-            cart.payment = payment
-            cart.ref_code = create_ref_code()
-            cart.save()
+                # create the payment
+                payment = Payment()
+                payment.stripe_charge_id = intent['id']
+                payment.user = self.request.user
+                payment.amount = int(cart.get_total())
+                payment.save()
 
-            messages.success(self.request, "Your order was successful!")
-            return redirect('ecommerce:home')
+                cart_items = cart.items.all()
+                cart_items.update(ordered=True)
+                for cart_item in cart_items:
+                    cart_item.save()
 
-        except stripe.error.CardError as e:
-            messages.error(self.request, f"{e.error.message}")
-            return redirect('ecommerce:home')
+                # assign the payment to the order/cart
+                cart.ordered = True
+                cart.payment = payment
+                cart.ref_code = create_ref_code()
+                cart.save()
 
-        except stripe.error.RateLimitError as e:
-            # Too many requests made to the API too quickly
-            messages.error(self.request, "Rate limit error")
-            return redirect('ecommerce:home')
+                messages.success(self.request, "Your order was successful!")
+                return redirect('ecommerce:home')
 
-        except stripe.error.InvalidRequestError as e:
-            # Invalid parameters were supplied to Stripe's API
-            messages.error(self.request, "Invalid parameters")
-            return redirect('ecommerce:home')
+            except stripe.error.CardError as e:
+                messages.error(self.request, f"{e.error.message}")
+                return redirect('ecommerce:home')
 
-        except stripe.error.AuthenticationError as e:
-            # Authentication with Stripe's API failed
-            # (maybe you changed API keys recently)
-            messages.error(self.request, "Not authenticated")
-            return redirect('ecommerce:home')
+            except stripe.error.RateLimitError as e:
+                # Too many requests made to the API too quickly
+                messages.error(self.request, "Rate limit error")
+                return redirect('ecommerce:home')
 
-        except stripe.error.APIConnectionError as e:
-            # Network communication with Stripe failed
-            messages.error(self.request, "Network error")
-            return redirect('ecommerce:home')
+            except stripe.error.InvalidRequestError as e:
+                # Invalid parameters were supplied to Stripe's API
+                messages.error(self.request, "Invalid parameters")
+                return redirect('ecommerce:home')
 
-        except stripe.error.StripeError as e:
-            # Display a very generic error to the user, and maybe send
-            # yourself an email
-            messages.error(self.request, "Something went wrong. You were not charged. Please try again.")
-            return redirect('ecommerce:home')
+            except stripe.error.AuthenticationError as e:
+                # Authentication with Stripe's API failed
+                # (maybe you changed API keys recently)
+                messages.error(self.request, "Not authenticated")
+                return redirect('ecommerce:home')
 
-        except Exception as e:
-            # Something else happened, completely unrelated to Stripe
-            # send an email to ourselves
-            messages.error(self.request, "A serious error occured. We have been notified.")
-            return redirect('ecommerce:home')
+            except stripe.error.APIConnectionError as e:
+                # Network communication with Stripe failed
+                messages.error(self.request, "Network error")
+                return redirect('ecommerce:home')
+
+            except stripe.error.StripeError as e:
+                # Display a very generic error to the user, and maybe send
+                # yourself an email
+                messages.error(self.request, "Something went wrong. You were not charged. Please try again.")
+                return redirect('ecommerce:home')
+
+            except Exception as e:
+                # Something else happened, completely unrelated to Stripe
+                # send an email to ourselves
+                messages.error(self.request, "A serious error occured. We have been notified.")
+                return redirect('ecommerce:home')
 
 
 

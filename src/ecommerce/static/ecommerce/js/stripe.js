@@ -51,3 +51,17 @@ submitButton.addEventListener('click', function(ev) {
     }
   });
 });
+
+const currentCardForm = $('.current-card-form');
+const newCardForm = $('.new-card-form');
+const use_default_card = document.querySelector("input[name=use_default_card]");
+
+use_default_card.addEventListener('change', function() {
+  if (this.checked) {
+    newCardForm.hide();
+    currentCardForm.show()
+  } else {
+    newCardForm.show();
+    currentCardForm.hide()
+  }
+})
