@@ -36,7 +36,7 @@ def is_valid_form(values):
             valid = False
     return valid
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
         try:
@@ -196,7 +196,7 @@ class CheckoutView(View):
             return redirect('ecommerce:order-summary')
 
 
-class PaymentView(View):
+class PaymentView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         cart = Cart.objects.get(user=self.request.user, ordered=False)
         if cart.billing_address:
@@ -228,27 +228,46 @@ class PaymentView(View):
         cart = Cart.objects.get(user=self.request.user, ordered=False)
         form = PaymentForm(self.request.POST)
         userprofile = UserProfile.objects.get(user=self.request.user)
+
         if form.is_valid():
             token = form.cleaned_data.get('stripeToken')
             save = form.cleaned_data.get('save')
             use_default = form.cleaned_data.get('use_default')
 
+            # if save:
+            #     # allow to fetch cards
+            #     if not userprofile.stripe_customer_id:
+            #         customer = stripe.Customer.create(
+            #             email=self.request.user.email,
+            #             source=token,
+            #         )
+            #         userprofile.stripe_customer_id = customer['id']
+            #         userprofile.one_click_purchasing = True
+            #         userprofile.save()
+            #     else:
+            #         # if the userprofile does already exist
+            #         stripe.Customer.create_source(
+            #             userprofile.stripe_customer_id,
+            #             source=token
+            #         )
+
             if save:
-                # allow to fetch cards
-                if not userprofile.stripe_customer_id:
+                if userprofile.stripe_customer_id != '' and userprofile.stripe_customer_id is not None:
+                    customer = stripe.Customer.create_source(
+                        userprofile.stripe_customer_id,
+                        source=token,
+                    )
+                    # customer.sources.create(source=token)
+
+                else:
                     customer = stripe.Customer.create(
                         email=self.request.user.email,
                         source=token,
                     )
+                    # customer.sources.create(source=token)
                     userprofile.stripe_customer_id = customer['id']
                     userprofile.one_click_purchasing = True
                     userprofile.save()
-                else:
-                    # if the userprofile does already exist
-                    stripe.Customer.create_source(
-                        userprofile.stripe_customer_id,
-                        source=token
-                    )
 
             amount = int(cart.get_total() * 100)
 

@@ -29,12 +29,13 @@ Blog app:
 [x] - !bug - when in xs the links from navbar(that is now a menu) still have the underline class
 [x] - add a footer and copyright
 [x] - delete unused tags (made it with management command not signals)
+[x] - create an email marketing campaign on mailchimp
+[x] - when new users make an account, subscribe them to the newsletter
+[---] - own comments on site
 
 [ ] - add the search in every view as a widget or in the navbar
-[ ] - remove unnecessary files and libraries
-[ ] - when new users make an account, subscribe them to the newsletter
+[--] - remove unnecessary files and libraries
 [ ] - button to view the post_detail for each post ?
-[ ] - create an email marketing campaign on mailchimp
 [ ] - remove all features that a blog doesn't need
 [ ] - !bug - underline class only works on screen sizes > 767px so the links won't work if it's less... they will also be purple (leave it like this?)
 [ ] - REST API
@@ -45,7 +46,6 @@ Blog app:
 [ ] - add the draft feature when a user makes a new post and let only the author see it.
 
 [ ] - ? add markdown preview in admin
-[ ] - own comments on site
 [!] - SameOrigin=Strict header  - middleware not working
 [ ] - sending asynchronous emails in production (to a list of subscribers)
 [ ] - RSS feed ?

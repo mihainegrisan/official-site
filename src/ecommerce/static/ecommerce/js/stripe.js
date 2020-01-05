@@ -1,31 +1,31 @@
 // Set your publishable key: remember to change this to your live publishable key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
-var stripe = Stripe('pk_test_TxRiGYlNAKfUBKR7QSpDZG8B00sLDBhhBj');
-var elements = stripe.elements();
+const stripe = Stripe('pk_test_TxRiGYlNAKfUBKR7QSpDZG8B00sLDBhhBj');
+const elements = stripe.elements();
 
 
 // Set up Stripe.js and Elements to use in checkout form
-var style = {
+const style = {
   base: {
     color: "#32325d",
   }
 };
 
-var card = elements.create("card", { style: style });
+const card = elements.create("card", { style: style });
 card.mount("#card-element");
 
 
-card.addEventListener('change', ({error}) => {
-  const displayError = document.getElementById('card-errors');
-  if (error) {
-    displayError.textContent = error.message;
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
   } else {
     displayError.textContent = '';
   }
 });
 
 
-var submitButton = document.getElementById('stripeBtn');
+const submitButton = document.getElementById('stripeBtn');
 
 submitButton.addEventListener('click', function(ev) {
   stripe.confirmCardPayment(clientSecret, {
@@ -64,4 +64,4 @@ use_default_card.addEventListener('change', function() {
     newCardForm.show();
     currentCardForm.hide()
   }
-})
+});

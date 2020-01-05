@@ -8,11 +8,14 @@
 [x] - order_summary
 [x] - checkout
 [x] - payment with stripe
-[---] - coupons
+[x] - style the admin
+[x] - coupons
+[ ] -
+[x] - save debit/credit card info for future purchases
+[ ] - 
 [ ] - !bug messages/alert close button not working
-[ ] - LOGIN_REDIRECT_URL is not dynamic
+[ ] - !bug LOGIN_REDIRECT_URL is not dynamic
+[ ] - !bug - billing address the same as shipping address
 [ ] -
-[ ] -
-[ ] - style the admin
 [ ] - make a search bar
 [ ] - message when user adds an item to the cart?
